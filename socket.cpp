@@ -23,6 +23,9 @@
 
 using namespace std;
 
+/**
+ * @brief create a socket without error check
+ */
 int64_t socket_create(const addrinfo& hint) noexcept {
     return ::socket(hint.ai_family, //
                     hint.ai_socktype, hint.ai_protocol);
@@ -64,10 +67,9 @@ uint32_t socket_connect(int64_t sd, const sockaddr_in6& remote) noexcept {
     return 0;
 }
 
-uint32_t socket_accept(int64_t ln) noexcept {
-    if (::accept(ln, nullptr, nullptr))
-        return socket_recent();
-    return 0;
+uint32_t socket_accept(int64_t ln, int64_t& sd) noexcept {
+    sd = ::accept(ln, nullptr, nullptr);
+    return socket_recent();
 }
 
 uint32_t socket_get_name(int64_t sd, sockaddr_in& local) noexcept {
@@ -113,12 +115,14 @@ uint32_t socket_set_option_nodelay(int64_t sd) noexcept {
     return socket_set_option(sd, IPPROTO_TCP, TCP_NODELAY, true);
 }
 
-uint32_t socket_set_option_timout1(int64_t sd, uint32_t ms,
-                                   int64_t option) noexcept {
-    constexpr auto unit = 1000; // millisecond
+uint32_t socket_set_option_timout(int64_t sd, chrono::microseconds us,
+                                  int64_t option) noexcept {
+    const auto s = chrono::duration_cast<chrono::seconds>(us);
+    us -= s;
     timeval timeout{};
-    timeout.tv_sec = ms / unit;
-    timeout.tv_usec = (ms % unit) * unit;
+    timeout.tv_sec = s.count();
+    timeout.tv_usec = us.count();
+
     if (::setsockopt(sd, SOL_SOCKET, option, //
                      (char*)&timeout, sizeof(timeval)) != 0) {
         return socket_recent();
@@ -126,13 +130,18 @@ uint32_t socket_set_option_timout1(int64_t sd, uint32_t ms,
     return 0;
 }
 
-uint32_t socket_set_option_timout(int64_t sd, //
-                                  uint32_t send_ms, uint32_t recv_ms) noexcept {
-    if (auto ec = socket_set_option_timout1(sd, send_ms, SO_SNDTIMEO))
-        return ec;
-    if (auto ec = socket_set_option_timout1(sd, recv_ms, SO_RCVTIMEO))
-        return ec;
-    return 0;
+uint32_t socket_set_option_timout(int64_t sd, uint32_t us,
+                                  int64_t option) noexcept {
+    return socket_set_option_timout(sd, chrono::microseconds{us}, option);
+}
+
+uint32_t socket_set_option_send_timout(int64_t sd, //
+                                       uint32_t us) noexcept {
+    return socket_set_option_timout(sd, chrono::microseconds{us}, SO_SNDTIMEO);
+}
+uint32_t socket_set_option_recv_timout(int64_t sd, //
+                                       uint32_t us) noexcept {
+    return socket_set_option_timout(sd, chrono::microseconds{us}, SO_RCVTIMEO);
 }
 
 #if __has_include(<WinSock2.h>) // using winsock

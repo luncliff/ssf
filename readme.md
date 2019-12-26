@@ -1,2 +1,2 @@
 
-Minimal code snippet to **build** something 
+Minimal C++ code snippet to **build** something 
