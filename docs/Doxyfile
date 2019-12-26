@@ -17,12 +17,6 @@ MARKDOWN_SUPPORT       = YES
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-EXTRACT_ALL            = YES
-
-#---------------------------------------------------------------------------
-# Configuration options related to the input files
-#---------------------------------------------------------------------------
-
 INPUT                  = ..
 INPUT_ENCODING         = UTF-8
 
@@ -46,6 +40,7 @@ EXAMPLE_PATH           = examples
 EXAMPLE_RECURSIVE      = NO
 
 IMAGE_PATH             = docs/images
+OUTPUT_DIRECTORY       = doxygen
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -53,3 +48,7 @@ IMAGE_PATH             = docs/images
 
 #CLANG_ASSISTED_PARSING = YES
 #CLANG_OPTIONS          = include
+
+#---------------------------------------------------------------------------
+
+GENERATE_XML = YES

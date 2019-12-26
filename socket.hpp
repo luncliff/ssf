@@ -13,7 +13,7 @@ struct sockaddr_in6;
 
 /**
  * @brief initialize platform specific network module
- * @throw `std::system_error`
+ * @throw std::system_error
  * @ingroup system
  */
 void socket_setup() noexcept(false);
@@ -216,7 +216,7 @@ uint32_t socket_set_option_recv_timout(int64_t sd, //
                                        uint32_t us) noexcept;
 
 /**
- * @brief test if the error code is because of non-blocking
+ * @brief test if the error code is for non-blocking
  *
  * @ingroup socket
  */
