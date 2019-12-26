@@ -1,0 +1,7 @@
+#
+#   https://devblogs.microsoft.com/cppblog/clear-functional-c-documentation-with-sphinx-breathe-doxygen-cmake/
+#
+cmake>=3.10
+sphinx_rtd_theme
+guzzle_sphinx_theme
+breathe

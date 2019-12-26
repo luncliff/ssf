@@ -24,10 +24,14 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
         -std=gnu++14
     )
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-    target_compile_options(ssf
-    PUBLIC
-        -stdlib=libc++
-    )
+    if(WIN32)
+        # clang-cl is not considered for now ...
+    else()
+        target_compile_options(ssf
+        PUBLIC
+            -stdlib=libc++
+        )
+    endif()
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES MSVC)
     target_compile_options(ssf
     PUBLIC
