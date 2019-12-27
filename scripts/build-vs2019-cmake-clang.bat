@@ -17,7 +17,7 @@ if exist %vcvarsall_path% (
     call %vcvarsall_path% x86_amd64
 )
 
-REM path "C:/Program Files/LLVM/bin/";%PATH%
+path "C:/Program Files/LLVM/bin/";%PATH%
 clang-cl --version
 
 REM We can specify with -DCMAKE_CXX_COMPILER=clang-cl

@@ -19,7 +19,7 @@ jobs:
             brew info cmake;
       - task: CMake@1
         inputs:
-          cmakeArgs: . -DBUILD_SHARED_LIBS=true -DCMAKE_CXX_COMPILER=clang
+          cmakeArgs: . -DBUILD_SHARED_LIBS=true
           workingDirectory: "."
       - task: CMake@1
         inputs:

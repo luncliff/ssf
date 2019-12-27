@@ -18,10 +18,15 @@ PROPERTIES
 #     $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 # )
 
+message("compiler: ${CMAKE_CXX_COMPILER_ID}")
 if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
     target_compile_options(ssf
     PUBLIC
         -std=gnu++14
+    )
+    target_link_libraries(ssf
+    PUBLIC
+        stdc++
     )
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
     if(WIN32)

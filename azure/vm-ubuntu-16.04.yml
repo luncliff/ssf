@@ -16,6 +16,7 @@ jobs:
           script: |
             sudo bash ./scripts/setup-compilers-ubuntu.sh;
             sudo apt install -y -qq --fix-missing rsync wget unzip;
+            sudo bash ./scripts/install-libcxx.sh;
       - task: CMake@1
         inputs:
           cmakeArgs: . -DBUILD_SHARED_LIBS=true -DCMAKE_CXX_COMPILER=clang

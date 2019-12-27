@@ -29,7 +29,7 @@ apt-add-repository "deb http://apt.llvm.org/${distribution}/ llvm-toolchain-${di
 
 apt update -qq
 apt install -y -q \
-  g++-8 g++-9 clang-7 clang-8 clang-9 \
+  g++-8 g++-9 clang-8 clang-9 \
   libc++abi-8-dev
 
 pushd /usr/bin
