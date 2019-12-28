@@ -17,7 +17,8 @@ MARKDOWN_SUPPORT       = YES
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = ..
+# the contents is relative to CLI working directory
+INPUT                  = .
 INPUT_ENCODING         = UTF-8
 
 FILE_PATTERNS          = *.c \
@@ -40,7 +41,7 @@ EXAMPLE_PATH           = examples
 EXAMPLE_RECURSIVE      = NO
 
 IMAGE_PATH             = docs/images
-OUTPUT_DIRECTORY       = doxygen
+OUTPUT_DIRECTORY       = docs
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
