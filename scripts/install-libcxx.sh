@@ -41,6 +41,6 @@ cmake -D LLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
       ../llvm
 
 # too many logs. make silent ...
-make install-cxx    2>err-libcxx.txt
-make install-cxxabi 2>err-libcxxabi.txt
+make -j5 install-cxx    2>err-libcxx.txt
+make -j5 install-cxxabi 2>err-libcxxabi.txt
 popd
