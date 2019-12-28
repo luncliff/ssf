@@ -1,0 +1,27 @@
+site_name: ssf
+
+theme: readthedocs
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+  - Functions: functions.md
+  - Classes:
+    - List: annotated.md
+    - Index: classes.md
+    - Hierarchy: hierarchy.md
+    - Members: class_members.md
+    - Member Functions: class_member_functions.md
+    - Member Variables: class_member_variables.md
+    - Member Typedefs: class_member_typedefs.md
+    - Member Enumerations: class_member_enums.md
+  - Namespaces:
+    - List: namespaces.md
+    - Members: namespace_members.md
+    - Member Functions: namespace_member_functions.md
+    - Member Variables: namespace_member_variables.md
+    - Member Typedefs: namespace_member_typedefs.md
+    - Member Enumerations: namespace_member_enums.md
+  - Files: files.md
+  - Pages: pages.md
+  - Bugs: bug.md

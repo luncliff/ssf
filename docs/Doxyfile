@@ -10,7 +10,6 @@ PROJECT_BRIEF          = "Minimal C++ code snippet to build something"
 
 OUTPUT_LANGUAGE        = Korean-en
 
-JAVADOC_AUTOBRIEF      = YES
 MARKDOWN_SUPPORT       = YES
 
 #---------------------------------------------------------------------------
@@ -52,4 +51,6 @@ OUTPUT_DIRECTORY       = docs
 
 #---------------------------------------------------------------------------
 
-GENERATE_XML = YES
+GENERATE_HTML           = NO
+GENERATE_XML            = YES
+GENERATE_LATEX          = NO
