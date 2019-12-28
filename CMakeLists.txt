@@ -18,7 +18,7 @@ PROPERTIES
 #     $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 # )
 
-message("compiler: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "compiler: ${CMAKE_CXX_COMPILER_ID}")
 if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
     target_compile_options(ssf
     PUBLIC
