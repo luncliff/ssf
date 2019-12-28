@@ -78,6 +78,7 @@ jobs:
           cmake_shared: False
           cmake_cxx_compiler: "clang-8"
           cmake_work_dir: "build-ub"
+          cmake_install_dir: "../install"
 
   - job: mac_cmake_appleclang_latest
     pool:
@@ -88,3 +89,4 @@ jobs:
           cmake_shared: False
           cmake_cxx_compiler: "clang"
           cmake_work_dir: "build-osx"
+          cmake_install_dir: "../install"
