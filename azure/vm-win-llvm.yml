@@ -30,7 +30,7 @@ jobs:
 
   - job: vs${{ parameters.visualstudio }}_cmake_ninja_clang_latest
     pool:
-      vmImage: ${{ parameters.vmimage }}
+      vmImage: ${{ parameters.vm_image }}
     steps:
       - task: ChocolateyCommand@0
         inputs:
