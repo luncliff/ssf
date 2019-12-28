@@ -7,15 +7,35 @@
 #
 
 jobs:
-- template: azure/vm-vs2017-win2016.yml
+- template: azure/vm-win-vs.yml
   parameters:
     visualstudio: '2017'
-    solution: '**/*.sln'
+    toolset: v141
+    vm_image: 'vs2017-win2016'
+    make_shared: True
+    configuration: 'Debug'
 
-- template: azure/vm-windows-2019.yml
+- template: azure/vm-win-vs.yml
   parameters:
     visualstudio: '2019'
-    solution: '**/*.sln'
+    toolset: v142
+    vm_image: 'windows-2019'
+    make_shared: True
+    configuration: 'Debug'
+
+- template: azure/vm-win-llvm.yml
+  parameters:
+    visualstudio: '2017'
+    vm_image: 'vs2017-win2016'
+    make_shared: True
+    configuration: 'Debug'
+
+- template: azure/vm-win-llvm.yml
+  parameters:
+    visualstudio: '2019'
+    vm_image: 'windows-2019'
+    make_shared: True
+    configuration: 'Debug'
 
 - template: azure/vm-ubuntu-16.04.yml
   parameters:
