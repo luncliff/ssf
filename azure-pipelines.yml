@@ -95,7 +95,7 @@ jobs:
           cmake_work_dir: "build-ub"
           cmake_install_dir: "../install"
 
-  - job: mac_cmake_appleclang_latest_debug
+  - job: mac_cmake_appleclang11_debug
     pool:
       vmImage: "macos-latest"
     variables:
@@ -107,7 +107,7 @@ jobs:
           cmake_work_dir: "build-osx"
           cmake_install_dir: "../install"
 
-  - job: mac_cmake_appleclang_latest_release
+  - job: mac_cmake_appleclang11_release
     pool:
       vmImage: "macos-latest"
     variables:
