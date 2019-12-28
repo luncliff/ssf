@@ -8,82 +8,83 @@
 #
 
 jobs:
-- job: vs2017_cmake_vs_msvc
-  pool:
-    vmImage: vs2017-win2016
-  variables:
-    platform: x64
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-vs.yml
-      parameters:
-        toolset: v141
+  # - template: azure/vm-ubuntu-16.04.yml
+  #   parameters:
+  #     name: Ubuntu1604
 
-- job: vs2019_cmake_vs_msvc
-  pool:
-    vmImage: windows-2019
-  variables:
-    platform: x64
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-vs.yml
-      parameters:
-        toolset: v142
+  # - template: azure/vm-macos-latest.yml
+  #   parameters:
+  #     name: MacOS
 
-- job: vs2017_cmake_ninja_clang_8
-  pool:
-    vmImage: vs2017-win2016
-  variables:
-    visualstudio: '2017'
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-llvm.yml
-      parameters:
-        llvm_version: '8.0.1'
+  - job: vs2017_cmake_vs_msvc141
+    pool:
+      vmImage: "vs2017-win2016"
+    variables:
+      platform: x64
+      configuration: Debug
+      is_dynamic: True
+    steps:
+      - template: azure/steps-win-vs.yml
+        parameters:
+          toolset: v141
 
-- job: vs2017_cmake_ninja_clang_9
-  pool:
-    vmImage: vs2017-win2016
-  variables:
-    visualstudio: '2017'
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-llvm.yml
-      parameters:
-        llvm_version: '9.0.0'
+  - job: vs2019_cmake_vs_msvc142
+    pool:
+      vmImage: "windows-2019"
+    variables:
+      platform: x64
+      configuration: Debug
+      is_dynamic: True
+    steps:
+      - template: azure/steps-win-vs.yml
+        parameters:
+          toolset: v142
 
-- job: vs2019_cmake_ninja_clang_8
-  pool:
-    vm_image: windows-2019
-  variables:
-    visualstudio: '2019'
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-llvm.yml
-      parameters:
-        llvm_version: '8.0.1'
+  - job: vs2017_cmake_ninja_clang8
+    pool:
+      vmImage: "vs2017-win2016"
+    variables:
+      visualstudio: 2017
+      configuration: Debug
+      is_dynamic: True
+    steps:
+      - template: azure/steps-win-llvm.yml
+        parameters:
+          llvm_version: "8.0.1"
 
-- job: vs2019_cmake_ninja_clang_9
-  pool:
-    vm_image: windows-2019
-  variables:
-    visualstudio: '2019'
-    configuration: Debug
-    is_dynamic: True
-  steps:
-    - template: azure/steps-win-llvm.yml
-      parameters:
-        llvm_version: '9.0.0'
+  - job: vs2017_cmake_ninja_clang9
+    pool:
+      vmImage: "vs2017-win2016"
+    variables:
+      visualstudio: 2017
+      configuration: Debug
+      is_dynamic: True
+    steps:
+      - template: azure/steps-win-llvm.yml
+        parameters:
+          llvm_version: "9.0.0"
 
-# - template: azure/vm-ubuntu-16.04.yml
-#   parameters:
-#     name: Ubuntu1604
+  - template: azure/jobs-win2019-llvm.yml
+    parameters:
+      make_shared: True
+      configuration: "Debug"
 
-# - template: azure/vm-macos-latest.yml
-#   parameters:
-#     name: MacOS
+  - job: ub1604_cmake_clang8
+    pool:
+      vmImage: "ubuntu-16.04"
+    steps:
+      - template: azure/steps-ubuntu.yml
+        parameters:
+          cmake_shared: False
+          cmake_cxx_compiler: "clang-8"
+          cmake_work_dir: "build-ub"
+
+  - job: mac_cmake_appleclang_latest
+    pool:
+      vmImage: "macos-latest"
+    steps:
+      - template: azure/steps-mac.yml
+        parameters:
+          cmake_shared: False
+          cmake_cxx_compiler: "clang"
+          cmake_work_dir: "build-osx"

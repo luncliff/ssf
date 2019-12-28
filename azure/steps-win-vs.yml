@@ -9,14 +9,16 @@ steps:
   - task: PowerShell@2
     inputs:
       targetType: "inline"
-      script: systeminfo;
+      script: systeminfo
+
   - task: CMake@1
     inputs:
       cmakeArgs: . -A $(platform) -DBUILD_SHARED_LIBS=$(is_dynamic)
       workingDirectory: "."
+
   - task: MSBuild@1
     inputs:
-      solution: '**/*.sln'
+      solution: "**/*.sln"
       msbuildArchitecture: $(platform)
       platform: $(platform)
       configuration: $(configuration)
