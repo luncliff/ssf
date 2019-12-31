@@ -8,6 +8,7 @@ pandoc
 
 doxybook
 mkdocs
+mkdocs-material
 
 sphinx_rtd_theme
 guzzle_sphinx_theme

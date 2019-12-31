@@ -36,5 +36,5 @@ html_theme = 'guzzle_sphinx_theme'
 
 # https://breathe.readthedocs.io/en/latest/quickstart.html
 
-breathe_projects = {"ssf": join(getcwd(), 'doxygen', 'xml')}
+breathe_projects = {"ssf": join(getcwd(), 'xml')}
 breathe_default_project = 'ssf'
