@@ -5,10 +5,10 @@
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops#use-a-microsoft-hosted-agent
 #   https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2019-Server2019-Readme.md
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/conditions?view=azure-devops&tabs=yaml
 #
 
 jobs:
-  # - template: azure/jobs-docs.yml
   - job: vs2017_cmake_vs_msvc141
     pool:
       vmImage: "vs2017-win2016"
@@ -111,3 +111,17 @@ jobs:
         parameters:
           cmake_work_dir: "build-osx"
           cmake_install_dir: "../install"
+
+  - job: mkdocs
+    pool:
+      vmImage: "macos-latest"
+    steps:
+      - template: azure/docs-steps-mkdocs.yml
+    dependsOn:
+      - vs2017_cmake_vs_msvc141
+      - vs2019_cmake_vs_msvc142
+      - vs2017_cmake_ninja_clang9
+      - ub1604_cmake_clang8_release
+      - mac_cmake_appleclang11_release
+    continueOnError: true
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

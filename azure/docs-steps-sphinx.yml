@@ -1,0 +1,16 @@
+#
+# Author: github.com/luncliff (luncliff@gmail.com)
+#
+
+# jobs:
+#   - job: sphinx
+#     pool:
+#       vmImage: "macos-latest"
+steps:
+  - script: brew install doxygen
+  - script: python3 -m pip install --user -r requirements.txt
+  - script: doxygen ./docs/Doxyfile
+  # sphinx, breadth
+  - script: sphinx-build ./docs/ ./docs/sphinx
+  - script: tree -L 2 ./docs/sphinx
+  # - pwsh: Invoke-Item ./docs/sphinx/index.html

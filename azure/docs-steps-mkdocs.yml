@@ -1,0 +1,30 @@
+#
+# Author: github.com/luncliff (luncliff@gmail.com)
+#
+
+# jobs:
+#   - job: mkdocs
+#     pool:
+#       vmImage: "macos-latest"
+steps:
+  - script: brew install doxygen
+  - script: python3 -m pip install --user -r requirements.txt
+  # # todo: doxybook2
+  # - script: wget https://github.com/matusnovak/doxybook2/releases/download/v1.0.0/doxybook2-osx-amd64-v1.0.0.zip
+  - script: doxygen ./docs/Doxyfile
+  # doxybook - mkdocs
+  - script: python3 -m doxybook -i docs/xml -o docs -t mkdocs
+  - script: python3 -m mkdocs build
+  # - script: python3 -m mkdocs gh-deploy
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "$(Build.BinariesDirectory)/site"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/site.zip"
+      replaceExistingArchive: true
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      # ArtifactName: "artifacts"
+      publishLocation: "Container"
