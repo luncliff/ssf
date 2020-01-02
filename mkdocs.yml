@@ -13,9 +13,8 @@ repo_name: luncliff/ssf
 repo_url: https://github.com/luncliff/ssf
 
 nav:
-  - Home: readme.md
-  - Index: socket_8cpp.md
-  - Code:
+  - All In One: socket_8cpp.md
+  - Organization:
       - Namespaces: namespaces.md
       - Functions: functions.md
       - Classes: classes.md
@@ -36,8 +35,8 @@ theme:
   #   text: "Nanum Gothic"
   #   code: "Nanum Gothic Coding"
   palette:
-    primary: "black"
-    # accent: "black"
+    primary: "blue grey"
+    accent: "blue"
   logo:
     icon: "call_split"
   # feature:

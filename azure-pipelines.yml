@@ -111,17 +111,3 @@ jobs:
         parameters:
           cmake_work_dir: "build-osx"
           cmake_install_dir: "../install"
-
-  - job: mkdocs
-    pool:
-      vmImage: "macos-latest"
-    steps:
-      - template: azure/docs-steps-mkdocs.yml
-    dependsOn:
-      - vs2017_cmake_vs_msvc141
-      - vs2019_cmake_vs_msvc142
-      - vs2017_cmake_ninja_clang9
-      - ub1604_cmake_clang8_release
-      - mac_cmake_appleclang11_release
-    continueOnError: true
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
