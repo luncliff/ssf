@@ -62,7 +62,7 @@ jobs:
       make_shared: True
       configuration: "Debug"
 
-  - job: ub1604_cmake_clang8_debug
+  - job: ubuntu_cmake_clang8_debug
     pool:
       vmImage: "ubuntu-16.04"
     variables:
@@ -75,7 +75,7 @@ jobs:
           cmake_work_dir: "build-ub"
           cmake_install_dir: "../install"
 
-  - job: ub1604_cmake_clang8_release
+  - job: ubuntu_cmake_clang8_release
     pool:
       vmImage: "ubuntu-16.04"
     variables:
