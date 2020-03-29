@@ -29,6 +29,7 @@
     <member refid="socket_8hpp_1ad019c4466fd89e629acf64801e8d0885" kind="function"><name>socket_setup</name></member>
     <member refid="socket_8hpp_1a77f25219e6e9039834edc7ca4e7507f6" kind="function"><name>socket_teardown</name></member>
     <member refid="socket_8hpp_1a7a59135fe52e91d37ef54b74a155174e" kind="function"><name>socket_recent</name></member>
+    <member refid="socket_8hpp_1a080f80d234bca59ac52d59738c314246" kind="function"><name>socket_is_valid</name></member>
     <member refid="socket_8hpp_1adc5a948d26ca8d969205da03143cf676" kind="function"><name>socket_create</name></member>
     <member refid="socket_8hpp_1ac875491f2445520c5ac8b9ddfc55ad57" kind="function"><name>socket_close</name></member>
     <member refid="socket_8hpp_1a57276ab3060b2acbb78378e321718415" kind="function"><name>socket_bind</name></member>
