@@ -146,6 +146,10 @@ uint32_t socket_set_option_recv_timout(int64_t sd, //
 
 #if __has_include(<WinSock2.h>) // using winsock
 
+bool socket_is_valid(int64_t h) noexcept {
+    return h != INVALID_SOCKET;
+}
+
 WSADATA wsa_data{};
 
 void socket_setup() noexcept(false) {
@@ -186,6 +190,10 @@ uint32_t socket_set_option_nonblock(int64_t sd) noexcept {
 }
 
 #elif __has_include(<netinet/in.h>) // using netinet
+
+bool socket_is_valid(int64_t h) noexcept {
+    return h > 0;
+}
 
 void socket_setup() noexcept(false) {
     // do nothing for posix system. network operation already available

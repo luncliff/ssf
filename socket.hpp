@@ -33,6 +33,15 @@ void socket_teardown() noexcept;
 uint32_t socket_recent() noexcept;
 
 /**
+ * @brief check if given socket descriptor is valid
+ *
+ * @param sd
+ * @return true     the sd is considered valid
+ * @return false    negative or `INVALID_SOCKET`
+ */
+bool socket_is_valid(int64_t sd) noexcept;
+
+/**
  * @brief create 1 socket
  * @param hint family, type, protocol
  * @param sd   reference to save the new socket
