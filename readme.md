@@ -1,2 +1,1 @@
-
-Minimal C++ code snippet to **build** something 
+./docs/index.md
