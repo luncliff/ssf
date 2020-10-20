@@ -1,70 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
   <compounddef id="socket_8hpp" kind="file" language="C++">
     <compoundname>socket.hpp</compoundname>
     <includes local="no">cstdint</includes>
     <includedby refid="socket_8cpp" local="yes">socket.cpp</includedby>
     <incdepgraph>
-      <node id="8">
+      <node id="2">
         <label>cstdint</label>
       </node>
-      <node id="7">
+      <node id="1">
         <label>socket.hpp</label>
         <link refid="socket_8hpp"/>
-        <childnode refid="8" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="socket_8hpp_1ad019c4466fd89e629acf64801e8d0885" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ad019c4466fd89e629acf64801e8d0885" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>void</type>
         <definition>void socket_setup</definition>
         <argsstring>() noexcept(false)</argsstring>
         <name>socket_setup</name>
         <briefdescription>
-<para>initialize platform specific network module </para>        </briefdescription>
+<para>initialize platform specific network module </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>std::system_error</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-</para>        </detaileddescription>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="21" column="1"/>
+        <location file="socket.hpp" line="21" column="6" declfile="socket.hpp" declline="21" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a77f25219e6e9039834edc7ca4e7507f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a77f25219e6e9039834edc7ca4e7507f6" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>void</type>
         <definition>void socket_teardown</definition>
         <argsstring>() noexcept</argsstring>
         <name>socket_teardown</name>
         <briefdescription>
-<para>release platform specific network module </para>        </briefdescription>
+<para>release platform specific network module </para>
+        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="26" column="1"/>
+        <location file="socket.hpp" line="26" column="6" declfile="socket.hpp" declline="26" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a7a59135fe52e91d37ef54b74a155174e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a7a59135fe52e91d37ef54b74a155174e" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_recent</definition>
         <argsstring>() noexcept</argsstring>
         <name>socket_recent</name>
         <briefdescription>
-<para>network related error </para>        </briefdescription>
+<para>network related error </para>
+        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="33" column="1"/>
+        <location file="socket.hpp" line="33" column="10" declfile="socket.hpp" declline="33" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a080f80d234bca59ac52d59738c314246" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a080f80d234bca59ac52d59738c314246" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>bool</type>
         <definition>bool socket_is_valid</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -74,24 +81,29 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>check if given socket descriptor is valid </para>        </briefdescription>
+<para>check if given socket descriptor is valid </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>true the sd is considered valid </para></simplesect>
-<simplesect kind="return"><para>false negative or <computeroutput>INVALID_SOCKET</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>true the sd is considered valid </para>
+</simplesect>
+<simplesect kind="return"><para>false negative or <computeroutput>INVALID_SOCKET</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="42" column="1"/>
+        <location file="socket.hpp" line="42" column="6" declfile="socket.hpp" declline="42" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1adc5a948d26ca8d969205da03143cf676" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1adc5a948d26ca8d969205da03143cf676" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_create</definition>
         <argsstring>(const addrinfo &amp;hint, int64_t &amp;sd) noexcept</argsstring>
@@ -105,30 +117,35 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>create 1 socket </para>        </briefdescription>
+<para>create 1 socket </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>hint</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>family, type, protocol </para></parameterdescription>
+<para>family, type, protocol </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>reference to save the new socket </para></parameterdescription>
+<para>reference to save the new socket </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="50" column="1" bodyfile="socket.cpp" bodystart="34" bodyend="37"/>
+        <location file="socket.hpp" line="50" column="10" bodyfile="socket.cpp" bodystart="34" bodyend="37" declfile="socket.hpp" declline="50" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1ac875491f2445520c5ac8b9ddfc55ad57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ac875491f2445520c5ac8b9ddfc55ad57" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_close</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -138,23 +155,27 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>dispose the given socket </para>        </briefdescription>
+<para>dispose the given socket </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="58" column="1"/>
+        <location file="socket.hpp" line="58" column="10" declfile="socket.hpp" declline="58" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a57276ab3060b2acbb78378e321718415" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a57276ab3060b2acbb78378e321718415" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_bind</definition>
         <argsstring>(int64_t sd, const sockaddr_in &amp;local) noexcept</argsstring>
@@ -168,30 +189,35 @@
           <declname>local</declname>
         </param>
         <briefdescription>
-<para>bind the socket to given address </para>        </briefdescription>
+<para>bind the socket to given address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to bind </para></parameterdescription>
+<para>socket to bind </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>local</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>IPv4 address </para></parameterdescription>
+<para>IPv4 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="67" column="1" bodyfile="socket.cpp" bodystart="39" bodyend="43"/>
+        <location file="socket.hpp" line="67" column="10" bodyfile="socket.cpp" bodystart="39" bodyend="43" declfile="socket.hpp" declline="67" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1ab411d3fbc9c4e7763aedf7153b0f053d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ab411d3fbc9c4e7763aedf7153b0f053d" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_bind</definition>
         <argsstring>(int64_t sd, const sockaddr_in6 &amp;local) noexcept</argsstring>
@@ -205,30 +231,35 @@
           <declname>local</declname>
         </param>
         <briefdescription>
-<para>bind the socket to given address </para>        </briefdescription>
+<para>bind the socket to given address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to bind </para></parameterdescription>
+<para>socket to bind </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>local</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>IPv6 address </para></parameterdescription>
+<para>IPv6 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="76" column="1" bodyfile="socket.cpp" bodystart="44" bodyend="49"/>
+        <location file="socket.hpp" line="76" column="10" bodyfile="socket.cpp" bodystart="44" bodyend="49" declfile="socket.hpp" declline="76" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a72ad64c8745e48923e497b8aec216d87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a72ad64c8745e48923e497b8aec216d87" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_listen</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -238,23 +269,28 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>start listening with the socket </para>        </briefdescription>
+<para>start listening with the socket </para>
+        </briefdescription>
         <detaileddescription>
-<para>The <computeroutput>backlog</computeroutput> value is fixed to 7.</para><para><parameterlist kind="param"><parameteritem>
+<para>The <computeroutput>backlog</computeroutput> value is fixed to 7.</para>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to start listen </para></parameterdescription>
+<para>socket to start listen </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="86" column="1" bodyfile="socket.cpp" bodystart="51" bodyend="54"/>
+        <location file="socket.hpp" line="86" column="10" bodyfile="socket.cpp" bodystart="51" bodyend="54" declfile="socket.hpp" declline="86" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a7589801a6bd5cc25c87ecd9f849d8281" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a7589801a6bd5cc25c87ecd9f849d8281" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_connect</definition>
         <argsstring>(int64_t sd, const sockaddr_in &amp;remote) noexcept</argsstring>
@@ -268,30 +304,35 @@
           <declname>remote</declname>
         </param>
         <briefdescription>
-<para>try connect to given endpoint(IPv4) </para>        </briefdescription>
+<para>try connect to given endpoint(IPv4) </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to start connect </para></parameterdescription>
+<para>socket to start connect </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>remote</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>IPv4 address </para></parameterdescription>
+<para>IPv4 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="95" column="1" bodyfile="socket.cpp" bodystart="56" bodyend="61"/>
+        <location file="socket.hpp" line="95" column="10" bodyfile="socket.cpp" bodystart="56" bodyend="61" declfile="socket.hpp" declline="95" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a6f812e13495c77a708e2c822434fdea8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a6f812e13495c77a708e2c822434fdea8" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_connect</definition>
         <argsstring>(int64_t sd, const sockaddr_in6 &amp;remote) noexcept</argsstring>
@@ -305,30 +346,35 @@
           <declname>remote</declname>
         </param>
         <briefdescription>
-<para>try connect to given endpoint(IPv6) </para>        </briefdescription>
+<para>try connect to given endpoint(IPv6) </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to start connect </para></parameterdescription>
+<para>socket to start connect </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>remote</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>IPv6 address </para></parameterdescription>
+<para>IPv6 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="104" column="1" bodyfile="socket.cpp" bodystart="63" bodyend="68"/>
+        <location file="socket.hpp" line="104" column="10" bodyfile="socket.cpp" bodystart="63" bodyend="68" declfile="socket.hpp" declline="104" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1aa125c1c2710ac6ceee78b695f30d034b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1aa125c1c2710ac6ceee78b695f30d034b" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_accept</definition>
         <argsstring>(int64_t ln, int64_t &amp;sd) noexcept</argsstring>
@@ -342,30 +388,35 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>accept a connection request and return client socket </para>        </briefdescription>
+<para>accept a connection request and return client socket </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>ln</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>listener socket </para></parameterdescription>
+<para>listener socket </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>reference to descriptor to save the new connected socket </para></parameterdescription>
+<para>reference to descriptor to save the new connected socket </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="113" column="1" bodyfile="socket.cpp" bodystart="70" bodyend="73"/>
+        <location file="socket.hpp" line="113" column="10" bodyfile="socket.cpp" bodystart="70" bodyend="73" declfile="socket.hpp" declline="113" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a031ce6ea7f741e6a5ecf4f711478c19e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a031ce6ea7f741e6a5ecf4f711478c19e" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_get_name</definition>
         <argsstring>(int64_t sd, sockaddr_in &amp;local) noexcept</argsstring>
@@ -379,30 +430,35 @@
           <declname>local</declname>
         </param>
         <briefdescription>
-<para>get the socket&apos;s address </para>        </briefdescription>
+<para>get the socket&apos;s address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to query the bound address </para></parameterdescription>
+<para>socket to query the bound address </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>local</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>object to receive IPv4 address </para></parameterdescription>
+<para>object to receive IPv4 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="122" column="1" bodyfile="socket.cpp" bodystart="75" bodyend="80"/>
+        <location file="socket.hpp" line="122" column="10" bodyfile="socket.cpp" bodystart="75" bodyend="80" declfile="socket.hpp" declline="122" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1ac81fc21babd2bc72b739ae064e077439" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ac81fc21babd2bc72b739ae064e077439" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_get_name</definition>
         <argsstring>(int64_t sd, sockaddr_in6 &amp;local) noexcept</argsstring>
@@ -416,30 +472,35 @@
           <declname>local</declname>
         </param>
         <briefdescription>
-<para>get the socket&apos;s address </para>        </briefdescription>
+<para>get the socket&apos;s address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to query the bound address </para></parameterdescription>
+<para>socket to query the bound address </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>local</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>object to receive IPv6 address </para></parameterdescription>
+<para>object to receive IPv6 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="131" column="1" bodyfile="socket.cpp" bodystart="82" bodyend="87"/>
+        <location file="socket.hpp" line="131" column="10" bodyfile="socket.cpp" bodystart="82" bodyend="87" declfile="socket.hpp" declline="131" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a24bb544db5c840caf9fccd20c628cb61" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a24bb544db5c840caf9fccd20c628cb61" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_get_peer</definition>
         <argsstring>(int64_t sd, sockaddr_in &amp;remote) noexcept</argsstring>
@@ -453,30 +514,35 @@
           <declname>remote</declname>
         </param>
         <briefdescription>
-<para>get connected peer&apos;s address </para>        </briefdescription>
+<para>get connected peer&apos;s address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to query the peer address </para></parameterdescription>
+<para>socket to query the peer address </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>remote</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>object to receive IPv4 address </para></parameterdescription>
+<para>object to receive IPv4 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="140" column="1" bodyfile="socket.cpp" bodystart="89" bodyend="94"/>
+        <location file="socket.hpp" line="140" column="10" bodyfile="socket.cpp" bodystart="89" bodyend="94" declfile="socket.hpp" declline="140" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a34d1fb5bb98fa31fca52b88d81534276" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a34d1fb5bb98fa31fca52b88d81534276" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_get_peer</definition>
         <argsstring>(int64_t sd, sockaddr_in6 &amp;remote) noexcept</argsstring>
@@ -490,30 +556,35 @@
           <declname>remote</declname>
         </param>
         <briefdescription>
-<para>get connected peer&apos;s address </para>        </briefdescription>
+<para>get connected peer&apos;s address </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to query the peer address </para></parameterdescription>
+<para>socket to query the peer address </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>remote</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>object to receive IPv6 address </para></parameterdescription>
+<para>object to receive IPv6 address </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="149" column="1" bodyfile="socket.cpp" bodystart="96" bodyend="101"/>
+        <location file="socket.hpp" line="149" column="10" bodyfile="socket.cpp" bodystart="96" bodyend="101" declfile="socket.hpp" declline="149" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1ac38c5ed28135ecd13934fa08933205f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ac38c5ed28135ecd13934fa08933205f3" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option</definition>
         <argsstring>(int64_t sd, int64_t level, int64_t option, int64_t value) noexcept</argsstring>
@@ -535,44 +606,51 @@
           <declname>value</declname>
         </param>
         <briefdescription>
-<para>change the socket&apos;s option </para>        </briefdescription>
+<para>change the socket&apos;s option </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>level</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>option</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>value</parametername>
 </parameternamelist>
 <parameterdescription>
-<para></para></parameterdescription>
+<para></para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="160" column="1" bodyfile="socket.cpp" bodystart="103" bodyend="108"/>
+        <location file="socket.hpp" line="160" column="10" bodyfile="socket.cpp" bodystart="103" bodyend="108" declfile="socket.hpp" declline="160" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1aab48cce81295876864e04fb3638a8408" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1aab48cce81295876864e04fb3638a8408" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option_nonblock</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -582,15 +660,18 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>make socket to operate in non-blocking mode </para>        </briefdescription>
+<para>make socket to operate in non-blocking mode </para>
+        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="168" column="1"/>
+        <location file="socket.hpp" line="168" column="10" declfile="socket.hpp" declline="168" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1ad9e60a284fa6fd28dde3f57d28532404" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1ad9e60a284fa6fd28dde3f57d28532404" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option_reuse_address</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -600,15 +681,18 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>make socket to reuse address </para>        </briefdescription>
+<para>make socket to reuse address </para>
+        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="175" column="1" bodyfile="socket.cpp" bodystart="110" bodyend="112"/>
+        <location file="socket.hpp" line="175" column="10" bodyfile="socket.cpp" bodystart="110" bodyend="112" declfile="socket.hpp" declline="175" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1aa6e8317a0c5c0255606c5e5260b5dc00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1aa6e8317a0c5c0255606c5e5260b5dc00" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option_nodelay</definition>
         <argsstring>(int64_t sd) noexcept</argsstring>
@@ -618,15 +702,18 @@
           <declname>sd</declname>
         </param>
         <briefdescription>
-<para>make tcp send without delay </para>        </briefdescription>
+<para>make tcp send without delay </para>
+        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<para><simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="182" column="1" bodyfile="socket.cpp" bodystart="114" bodyend="116"/>
+        <location file="socket.hpp" line="182" column="10" bodyfile="socket.cpp" bodystart="114" bodyend="116" declfile="socket.hpp" declline="182" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a4ea73aaf08802fdca753351ef3227487" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a4ea73aaf08802fdca753351ef3227487" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option_send_timout</definition>
         <argsstring>(int64_t sd, uint32_t us) noexcept</argsstring>
@@ -640,30 +727,35 @@
           <declname>us</declname>
         </param>
         <briefdescription>
-<para>set the socket&apos;s send timeout </para>        </briefdescription>
+<para>set the socket&apos;s send timeout </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to change timeout </para></parameterdescription>
+<para>socket to change timeout </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>us</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>microsecond fot the duration </para></parameterdescription>
+<para>microsecond fot the duration </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="191" column="1" bodyfile="socket.cpp" bodystart="138" bodyend="141"/>
+        <location file="socket.hpp" line="191" column="10" bodyfile="socket.cpp" bodystart="138" bodyend="141" declfile="socket.hpp" declline="191" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a8a082d28ab13d3f27efd086e16303c6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a8a082d28ab13d3f27efd086e16303c6a" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>uint32_t</type>
         <definition>uint32_t socket_set_option_recv_timout</definition>
         <argsstring>(int64_t sd, uint32_t us) noexcept</argsstring>
@@ -677,30 +769,35 @@
           <declname>us</declname>
         </param>
         <briefdescription>
-<para>set the socket&apos;s recv timeout </para>        </briefdescription>
+<para>set the socket&apos;s recv timeout </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>sd</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>socket to change timeout </para></parameterdescription>
+<para>socket to change timeout </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>us</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>microsecond fot the duration </para></parameterdescription>
+<para>microsecond fot the duration </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>error code from <computeroutput>errno</computeroutput> or <computeroutput>WSAGetLastError</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="201" column="1" bodyfile="socket.cpp" bodystart="142" bodyend="145"/>
+        <location file="socket.hpp" line="201" column="10" bodyfile="socket.cpp" bodystart="142" bodyend="145" declfile="socket.hpp" declline="201" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="socket_8hpp_1a901db3d71d4a694562fda404e8a8e547" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="socket_8hpp_1a901db3d71d4a694562fda404e8a8e547" prot="public" static="no" const="no" explicit="no" inline="no" noexcept="yes" virt="non-virtual">
         <type>bool</type>
         <definition>bool socket_would_block</definition>
         <argsstring>(uint32_t ec) noexcept</argsstring>
@@ -710,12 +807,13 @@
           <declname>ec</declname>
         </param>
         <briefdescription>
-<para>test if the error code is for non-blocking </para>        </briefdescription>
+<para>test if the error code is for non-blocking </para>
+        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="socket.hpp" line="207" column="1"/>
+        <location file="socket.hpp" line="207" column="6" declfile="socket.hpp" declline="207" declcolumn="6"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
