@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(ssf VERSION 1.0 LANGUAGES CXX)
 
+find_package(Threads REQUIRED)
+
 add_library(ssf
     socket.hpp
     socket.cpp
@@ -17,8 +19,8 @@ PROPERTIES
 #     $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 # )
 
-message(STATUS "compiler: ${CMAKE_CXX_COMPILER_ID}")
-if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
+message(STATUS "compiler: CMAKE_CXX_COMPILER_ID")
+if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     target_compile_options(ssf
     PUBLIC
         -std=gnu++14
@@ -27,7 +29,7 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
     PUBLIC
         stdc++
     )
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     if(WIN32)
         # clang-cl is not considered for now ...
     else()
@@ -36,7 +38,7 @@ elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
             -stdlib=libc++
         )
     endif()
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES MSVC)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     target_compile_options(ssf
     PUBLIC
         /W4
