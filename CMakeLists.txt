@@ -1,25 +1,38 @@
 cmake_minimum_required(VERSION 3.10)
-project(ssf VERSION 1.0 LANGUAGES CXX)
+project(ssf VERSION 1.0.1 LANGUAGES CXX)
+message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
+include(GNUInstallDirs)
+if(WIN32)
+    # see "C:/Program Files (x86)/Windows Kits/10/Redist/..."
+    # 10.0.18362.0, 10.0.19041.0, 10.0.20348.0 ...
+    set(CMAKE_INSTALL_DEBUG_LIBRARIES true)
+    set(CMAKE_INSTALL_UCRT_LIBRARIES true)
+    include(InstallRequiredSystemLibraries)
+    message(VERBOSE " Target: ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
+endif()
 find_package(Threads REQUIRED)
 
+
+list(APPEND hdrs socket.hpp)
+
 add_library(ssf
-    socket.hpp
+    ${hdrs}
     socket.cpp
 )
 
 set_target_properties(ssf
 PROPERTIES
     CXX_STANDARD 14
-    # PUBLIC_HEADER socket.hpp
+    PUBLIC_HEADER "${hdrs}"
 )
 
-# target_include_directories(ssf
-# PUBLIC
-#     $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
-# )
+target_include_directories(ssf
+PUBLIC
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
-message(STATUS "compiler: CMAKE_CXX_COMPILER_ID")
+message(STATUS "compiler: ${CMAKE_CXX_COMPILER_ID}")
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     target_compile_options(ssf
     PUBLIC
@@ -40,8 +53,8 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     target_compile_options(ssf
-    PUBLIC
-        /W4
+    PRIVATE
+        /W4 /Zc:__cplusplus
     )
 endif()
 
@@ -61,26 +74,31 @@ elseif(APPLE)
     )
 endif()
 
-install(FILES   socket.hpp
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}
+install(TARGETS ssf
+        EXPORT  ${PROJECT_NAME}-config
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
 )
-install(TARGETS         ssf
-        EXPORT          ${PROJECT_NAME}-config
-        RUNTIME  DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-        LIBRARY  DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-        ARCHIVE  DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-        INCLUDES DESTINATION ${CMAKE_INSTALL_PREFIX}/include
-)
-install(EXPORT      ${PROJECT_NAME}-config
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}
+install(EXPORT  ${PROJECT_NAME}-config
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME} # share/ssf
 )
 
 include(CMakePackageConfigHelpers)
 set(VERSION_FILE_PATH   ${CMAKE_BINARY_DIR}/cmake/${PROJECT_NAME}-config-version.cmake)
 write_basic_package_version_file(${VERSION_FILE_PATH}
-    VERSION             ${PROJECT_VERSION}
-    COMPATIBILITY       SameMajorVersion
+    VERSION         ${PROJECT_VERSION}
+    COMPATIBILITY   SameMajorVersion
 )
-install(FILES           ${VERSION_FILE_PATH} 
-        DESTINATION     ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}
+install(FILES       ${VERSION_FILE_PATH} 
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}
 )
+
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_VENDOR "luncliff@gmail.com")
+set(CPACK_PACKAGE_DESCRIPTION "https://github.com/luncliff/ssf")
+set(CPACK_RESOURCE_FILE_README ${PROJECT_SOURCE_DIR}/readme.md)
+set(CPACK_GENERATOR "ZIP")
+include(CPack)
