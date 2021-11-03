@@ -82,22 +82,25 @@ jobs:
           workingDirectory: build-osx
       - powershell: ctest --output-on-failure
 
-  - job: mkdocs
+  - job: mkdocs # todo: doxybook2
     pool:
       vmImage: "macos-latest"
     steps:
-      - script: brew install doxygen
-      - script: python3 -m pip install --user -r requirements.txt
-      # # todo: doxybook2
-      # - script: wget https://github.com/matusnovak/doxybook2/releases/download/v1.0.0/doxybook2-osx-amd64-v1.0.0.zip
-      - script: doxygen ./docs/Doxyfile
-      # doxybook - mkdocs
-      - script: python3 -m doxybook -i docs/xml -o docs -t mkdocs
-      - script: python3 -m mkdocs build
+      - task: UsePythonVersion@0
+        displayName: "Setup: Python 3.10"
+        inputs:
+          versionSpec: "3.10"
+          addToPath: true
+          architecture: "x64"
+      - powershell: brew install doxygen
+      - powershell: python3 -m pip install --user -r requirements.txt
+      - powershell: doxygen ./docs/Doxyfile
+      # - powershell: python3 -m doxybook -i docs/xml -o docs -t mkdocs
+      # - powershell: python3 -m mkdocs build
       # - script: python3 -m mkdocs gh-deploy
       - task: ArchiveFiles@2
         inputs:
-          rootFolderOrFile: "$(Build.BinariesDirectory)/site"
+          rootFolderOrFile: "$(Build.BinariesDirectory)/docs"
           includeRootFolder: false
           archiveType: "zip"
           archiveFile: "$(Build.ArtifactStagingDirectory)/site.zip"
