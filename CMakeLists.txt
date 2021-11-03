@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(ssf VERSION 1.0.1 LANGUAGES CXX)
 message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
+option(BUILD_SHARED_LIBS "https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html" ON)
+
 include(GNUInstallDirs)
 if(WIN32)
     # see "C:/Program Files (x86)/Windows Kits/10/Redist/..."

@@ -2,63 +2,114 @@
 # Author: github.com/luncliff (luncliff@gmail.com)
 #
 # References
-#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops
-#   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops#use-a-microsoft-hosted-agent
-#   https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2019-Server2019-Readme.md
-#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/conditions?view=azure-devops&tabs=yaml
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates
+#   https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/
+#   https://github.com/actions/virtual-environments/tree/main/images
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted
 #
 
 jobs:
-  - job: vs2017_cmake_vs_msvc141
+  - job: vs2017_vs_msvc141
     pool:
       vmImage: "vs2017-win2016"
     variables:
       platform: x64
       configuration: Debug
-      is_dynamic: True
     steps:
-      - template: azure/steps-win-vs.yml
-        parameters:
-          toolset: v141
+      - powershell: systeminfo
+      - task: CMake@1
+        inputs:
+          cmakeArgs: . -DCMAKE_SYSTEM_VERSION="10.0.17134.0" -A $(platform)
+          workingDirectory: "."
+      - task: MSBuild@1
+        inputs:
+          solution: "**/*.sln"
+          msbuildArchitecture: $(platform)
+          platform: $(platform)
+          configuration: $(configuration)
+          msbuildArguments: "/p:platformtoolset=v141"
 
-  - job: vs2019_cmake_vs_msvc142
+  - job: vs2019_vs_msvc142
     pool:
       vmImage: "windows-2019"
     variables:
       platform: x64
       configuration: Debug
-      is_dynamic: True
     steps:
-      - template: azure/steps-win-vs.yml
-        parameters:
-          toolset: v142
+      - powershell: systeminfo
+      - task: CMake@1
+        inputs:
+          cmakeArgs: . -DCMAKE_SYSTEM_VERSION="10.0.19041.0" -A $(platform)
+          workingDirectory: "."
+      - task: MSBuild@1
+        inputs:
+          solution: "**/*.sln"
+          msbuildArchitecture: $(platform)
+          platform: $(platform)
+          configuration: $(configuration)
+          msbuildArguments: "/p:platformtoolset=v142"
 
-  - template: azure/jobs-win2019-llvm.yml
-    parameters:
-      make_shared: True
-      configuration: "Debug"
-
-  - job: ubuntu_cmake_clang8
+  - job: vs2019_ninja_clangcl
     pool:
-      vmImage: "ubuntu-16.04"
-    variables:
-      configuration: Debug
-      is_dynamic: True
+      vmImage: windows-2019
     steps:
-      - template: azure/steps-ubuntu.yml
-        parameters:
-          cmake_cxx_compiler: "clang-8"
-          cmake_work_dir: "build-ub"
-          cmake_install_dir: "../install"
+      - task: ChocolateyCommand@0
+        inputs:
+          command: "install"
+          installPackageId: "ninja"
+          installInstallArgs: "--no-progress --yes"
 
-  - job: mac_cmake_appleclang11
+      - task: ChocolateyCommand@0
+        inputs:
+          command: "install"
+          installPackageId: "llvm"
+          installInstallArgs: "--no-progress --yes"
+
+  - job: macos_appleclang
     pool:
       vmImage: "macos-latest"
     variables:
       configuration: Debug
-      is_dynamic: True
     steps:
-      - template: azure/steps-mac.yml
-        parameters:
-          cmake_work_dir: "build-osx"
-          cmake_install_dir: "../install"
+      - script: uname -a
+      - task: CMake@1
+        inputs:
+          cmakeArgs: .. -DCMAKE_BUILD_TYPE=$(configuration) -DCMAKE_INSTALL_PREFIX="$(Build.ArtifactStagingDirectory)"
+          workingDirectory: build-osx
+      - task: CMake@1
+        inputs:
+          cmakeArgs: --build . --target install --config $(configuration)
+          workingDirectory: build-osx
+      - powershell: ctest --output-on-failure
+
+  - job: mkdocs
+    pool:
+      vmImage: "macos-latest"
+    steps:
+      - script: brew install doxygen
+      - script: python3 -m pip install --user -r requirements.txt
+      # # todo: doxybook2
+      # - script: wget https://github.com/matusnovak/doxybook2/releases/download/v1.0.0/doxybook2-osx-amd64-v1.0.0.zip
+      - script: doxygen ./docs/Doxyfile
+      # doxybook - mkdocs
+      - script: python3 -m doxybook -i docs/xml -o docs -t mkdocs
+      - script: python3 -m mkdocs build
+      # - script: python3 -m mkdocs gh-deploy
+      - task: ArchiveFiles@2
+        inputs:
+          rootFolderOrFile: "$(Build.BinariesDirectory)/site"
+          includeRootFolder: false
+          archiveType: "zip"
+          archiveFile: "$(Build.ArtifactStagingDirectory)/site.zip"
+          replaceExistingArchive: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+          # ArtifactName: "artifacts"
+          publishLocation: "Container"
+    dependsOn:
+      - vs2017_vs_msvc141
+      - vs2019_vs_msvc142
+      - macos_appleclang
+    continueOnError: true
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
