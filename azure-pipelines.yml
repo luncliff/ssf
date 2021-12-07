@@ -82,37 +82,36 @@ jobs:
           workingDirectory: build-osx
       - powershell: ctest --output-on-failure
 
-  # - job: mkdocs # todo: doxybook2
-  #   pool:
-  #     vmImage: "macos-latest"
-  #   steps:
-  #     - task: UsePythonVersion@0
-  #       displayName: "Setup: Python 3.10"
-  #       inputs:
-  #         versionSpec: "3.10"
-  #         addToPath: true
-  #         architecture: "x64"
-  #     - powershell: brew install doxygen
-  #     - powershell: python3 -m pip install --user -r requirements.txt
-  #     - powershell: doxygen ./docs/Doxyfile
-  #     # - powershell: python3 -m doxybook -i docs/xml -o docs -t mkdocs
-  #     # - powershell: python3 -m mkdocs build
-  #     # - script: python3 -m mkdocs gh-deploy
-  #     - task: ArchiveFiles@2
-  #       inputs:
-  #         rootFolderOrFile: "$(Build.BinariesDirectory)/docs"
-  #         includeRootFolder: false
-  #         archiveType: "zip"
-  #         archiveFile: "$(Build.ArtifactStagingDirectory)/site.zip"
-  #         replaceExistingArchive: true
-  #     - task: PublishBuildArtifacts@1
-  #       inputs:
-  #         PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-  #         # ArtifactName: "artifacts"
-  #         publishLocation: "Container"
-  #   dependsOn:
-  #     - vs2017_vs_msvc141
-  #     - vs2019_vs_msvc142
-  #     - macos_appleclang
-  #   continueOnError: true
-  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  - job: mkdocs
+    pool:
+      vmImage: "macos-latest"
+    steps:
+      - powershell: |
+          brew install doxygen
+          python3 -m pip install --user -r requirements.txt
+        displayName: "Setup: Homebrew, Python3 packages"
+      - powershell: |
+          wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.4.0/doxybook2-osx-amd64-v1.4.0.zip
+          unzip ./doxybook2-osx-amd64-v1.4.0.zip -d externals
+        displayName: "Setup: Doxybook2 1.4.0"
+      - powershell: |
+          doxygen ./docs/Doxyfile
+          ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
+        displayName: "Run Doxygen and Doxybook2"
+      - powershell: python3 -m mkdocs build # todo: gh-deploy
+      - task: ArchiveFiles@2
+        inputs:
+          rootFolderOrFile: "$(Build.BinariesDirectory)/docs"
+          includeRootFolder: false
+          archiveType: "zip"
+          archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
+          replaceExistingArchive: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+          ArtifactName: "artifacts"
+    dependsOn:
+      - vs2017_vs_msvc141
+      - vs2019_vs_msvc142
+      - macos_appleclang
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

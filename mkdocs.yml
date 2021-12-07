@@ -13,36 +13,31 @@ repo_name: luncliff/ssf
 repo_url: https://github.com/luncliff/ssf
 
 nav:
-  - All In One: socket_8cpp.md
-  - Organization:
-      - Namespaces: namespaces.md
-      - Functions: functions.md
-      - Classes: classes.md
+  - Modules: index_groups.md
+  - Classes: index_classes.md
+  - Files: index_files.md
 
-markdown_extensions:
-  - admonition
-  - codehilite:
-      guess_lang: false
-  - toc:
-      permalink: true
+# markdown_extensions:
+#   - admonition
+#   - codehilite:
+#       guess_lang: false
+#   - toc:
+#       permalink: true
+
+# plugins:
+#   - git-revision-date
 
 theme:
   name: "material"
-  extra:
-    search:
-      language: "en, kr"
-  # font:
-  #   text: "Nanum Gothic"
-  #   code: "Nanum Gothic Coding"
   palette:
-    primary: "blue grey"
-    accent: "blue"
-  logo:
-    icon: "call_split"
-  # feature:
-  #   tabs: true
+    scheme: slate
+    primary: deep purple
+  icon: # check mkdocs-material 'materials/.icon/*.svg'
+    logo: material/library
+  feature:
+    tabs: true
 
 extra:
   social:
-    - type: "github"
+    - icon: fontawesome/brands/github-alt
       link: "https://github.com/luncliff"

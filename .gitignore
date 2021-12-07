@@ -1,11 +1,14 @@
 install
 package-lock.json
 site
+externals
 
 build
 build-*
 
 .vscode
+
+*.zip
 
 # Created by https://www.toptal.com/developers/gitignore/api/conan,cmake,python,c++,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=conan,cmake,python,c++,visualstudiocode

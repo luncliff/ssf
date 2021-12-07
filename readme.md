@@ -16,10 +16,10 @@ Wish they can help you either... and **special thanks to the doxybook and its au
 
 * [Clear, Functional C++ Documentation with Sphinx + Breathe + Doxygen + CMake](https://devblogs.microsoft.com/cppblog/clear-functional-c-documentation-with-sphinx-breathe-doxygen-cmake/)
     * [TartanLlama/cpp-documentation-example](https://github.com/TartanLlama/cpp-documentation-example)
-* [Doxybook](https://github.com/matusnovak/doxybook)
+* [Doxybook2](https://github.com/matusnovak/doxybook2)
     * [Doxygen](http://doxygen.nl/manual/docblocks.html)
     * [MkDocs](https://www.mkdocs.org/)
-
+    * [Doxybook](https://github.com/matusnovak/doxybook)(deprecated)
 
 ## License
 
