@@ -1,0 +1,84 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 5
+    },
+    "configurePresets": [
+        {
+            "name": "vcpkg-x64-windows-debug",
+            "displayName": "vcpkg(x64-windows) debug",
+            "generator": "Visual Studio 16 2019",
+            "binaryDir": "${sourceDir}/build-x64-windows",
+            "cacheVariables": {
+                "BUILD_TESTING": "ON",
+                "BUILD_SHARED_LIBS": "ON",
+                "CMAKE_VS_PLATFORM_NAME_DEFAULT": "x64",
+                "CMAKE_SYSTEM_VERSION": "10.0.18362.0",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "EXPERIMENTAL": "true"
+            },
+            "debug": {
+                "output": true
+            }
+        },
+        {
+            "name": "vcpkg-x64-osx-debug",
+            "displayName": "vcpkg(x64-osx) debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-x64-osx",
+            "cacheVariables": {
+                "BUILD_TESTING": "ON",
+                "BUILD_SHARED_LIBS": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "EXPERIMENTAL": "true"
+            },
+            "debug": {
+                "output": true
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-windows-debug",
+            "configurePreset": "vcpkg-x64-windows-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-osx-debug",
+            "configurePreset": "vcpkg-x64-osx-debug",
+            "configuration": "Debug"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "x64-windows-debug",
+            "configurePreset": "vcpkg-x64-windows-debug",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "x64-osx-debug",
+            "configurePreset": "vcpkg-x64-osx-debug",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        }
+    ]
+}
