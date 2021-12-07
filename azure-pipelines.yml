@@ -9,82 +9,55 @@
 #
 
 jobs:
-  - job: vs2017_vs_msvc141
-    pool:
-      vmImage: "vs2017-win2016"
-    variables:
-      platform: x64
-      configuration: Debug
-    steps:
-      - powershell: systeminfo
-      - task: CMake@1
-        inputs:
-          cmakeArgs: . -DCMAKE_SYSTEM_VERSION="10.0.17134.0" -A $(platform)
-          workingDirectory: "."
-      - task: MSBuild@1
-        inputs:
-          solution: "**/*.sln"
-          msbuildArchitecture: $(platform)
-          platform: $(platform)
-          configuration: $(configuration)
-          msbuildArguments: "/p:platformtoolset=v141"
-
-  - job: vs2019_vs_msvc142
+  - job: vs2019_msvc142
     pool:
       vmImage: "windows-2019"
     variables:
-      platform: x64
       configuration: Debug
     steps:
-      - powershell: systeminfo
       - task: CMake@1
+        displayName: "CMake: Configure"
         inputs:
-          cmakeArgs: . -DCMAKE_SYSTEM_VERSION="10.0.19041.0" -A $(platform)
+          cmakeArgs: --preset x64-windows-debug -DCMAKE_SYSTEM_VERSION="10.0.19041.0" -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)" -DINSTALL_FOR_DEPLOY=true
           workingDirectory: "."
       - task: MSBuild@1
         inputs:
-          solution: "**/*.sln"
-          msbuildArchitecture: $(platform)
-          platform: $(platform)
+          solution: "build-x64-windows/ssf.sln"
+          msbuildArchitecture: x64
+          platform: x64
           configuration: $(configuration)
           msbuildArguments: "/p:platformtoolset=v142"
-
-  - job: vs2019_ninja_clangcl
-    pool:
-      vmImage: windows-2019
-    steps:
-      - task: ChocolateyCommand@0
+      - task: CMake@1
+        displayName: "CMake: Install"
         inputs:
-          command: "install"
-          installPackageId: "ninja"
-          installInstallArgs: "--no-progress --yes"
+          cmakeArgs: --build --preset x64-windows-debug --target install
+          workingDirectory: "."
+      - powershell: ctest --preset x64-windows-debug --output-on-failure
+        displayName: "CTest"
 
-      - task: ChocolateyCommand@0
-        inputs:
-          command: "install"
-          installPackageId: "llvm"
-          installInstallArgs: "--no-progress --yes"
-
-  - job: macos_appleclang
+  - job: macos15_appleclang
     pool:
-      vmImage: "macos-latest"
+      vmImage: "macos-10.15"
     variables:
       configuration: Debug
     steps:
-      - script: uname -a
+      - powershell: brew install ninja
       - task: CMake@1
+        displayName: "CMake: Configure"
         inputs:
-          cmakeArgs: .. -DCMAKE_BUILD_TYPE=$(configuration) -DCMAKE_INSTALL_PREFIX="$(Build.ArtifactStagingDirectory)"
-          workingDirectory: build-osx
+          cmakeArgs: --preset x64-osx-debug -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
+          workingDirectory: "."
       - task: CMake@1
+        displayName: "CMake: Build/Install"
         inputs:
-          cmakeArgs: --build . --target install --config $(configuration)
-          workingDirectory: build-osx
-      - powershell: ctest --output-on-failure
+          cmakeArgs: --build --preset x64-osx-debug --target install
+          workingDirectory: "."
+      - powershell: ctest --preset x64-osx-debug --output-on-failure
+        displayName: "CTest"
 
   - job: mkdocs
     pool:
-      vmImage: "macos-latest"
+      vmImage: "macos-10.15"
     steps:
       - powershell: |
           brew install doxygen
@@ -101,7 +74,7 @@ jobs:
       - powershell: python3 -m mkdocs build # todo: gh-deploy
       - task: ArchiveFiles@2
         inputs:
-          rootFolderOrFile: "$(Build.BinariesDirectory)/docs"
+          rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
           includeRootFolder: false
           archiveType: "zip"
           archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
@@ -111,7 +84,6 @@ jobs:
           PathtoPublish: "$(Build.ArtifactStagingDirectory)"
           ArtifactName: "artifacts"
     dependsOn:
-      - vs2017_vs_msvc141
-      - vs2019_vs_msvc142
-      - macos_appleclang
+      - vs2019_msvc142
+      - macos15_appleclang
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
