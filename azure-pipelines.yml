@@ -8,6 +8,13 @@
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted
 #
 
+schedules:
+  - cron: "30 4 * * 4"
+    displayName: "Weekly check"
+    branches:
+      include:
+        - main
+
 jobs:
   - job: vs2019_msvc142
     pool:
@@ -72,17 +79,18 @@ jobs:
           ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
         displayName: "Run Doxygen and Doxybook2"
       - powershell: python3 -m mkdocs build # todo: gh-deploy
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
-          includeRootFolder: false
-          archiveType: "zip"
-          archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
-          replaceExistingArchive: true
+      # - task: ArchiveFiles@2
+      #   inputs:
+      #     rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
+      #     includeRootFolder: false
+      #     archiveType: "zip"
+      #     archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
+      #     replaceExistingArchive: true
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-          ArtifactName: "artifacts"
+          # PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+          PathtoPublish: "$(Build.SourcesDirectory)/docs"
+          ArtifactName: "docs"
     dependsOn:
       - vs2019_msvc142
       - macos15_appleclang

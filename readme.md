@@ -5,9 +5,7 @@
 
 Minimal C++ code snippet to **build** something.
 
-## Background
-
-This repository is a result of personal practice for [Doxygen](http://doxygen.nl/manual/docblocks.html) + [Doxybook](https://github.com/matusnovak/doxybook) + [MkDocs](https://www.mkdocs.org/) combination. The page theme is [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
+This repository is a result of personal practice for [Doxygen](http://doxygen.nl/manual/docblocks.html) + [Doxybook2](https://github.com/matusnovak/doxybook2) + [MkDocs](https://www.mkdocs.org/) combination. The page theme is [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
 
 ### References
 
