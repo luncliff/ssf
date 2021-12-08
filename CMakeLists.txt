@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20.5)
 project(ssf VERSION 1.0.2 LANGUAGES CXX)
 message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
@@ -87,6 +87,10 @@ install(TARGETS ssf
 install(EXPORT  ${PROJECT_NAME}-config
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME} # share/ssf
 )
+if(WIN32 AND BUILD_SHARED_LIBS)
+    # PDB file might not generated because of customization
+    install(FILES $<TARGET_PDB_FILE:ssf> DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
+endif()
 
 include(CMakePackageConfigHelpers)
 set(VERSION_FILE_PATH   ${CMAKE_BINARY_DIR}/cmake/${PROJECT_NAME}-config-version.cmake)

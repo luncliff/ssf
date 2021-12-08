@@ -65,7 +65,8 @@ jobs:
       - powershell: |
           conan create . -s build_type=Debug
           conan create . -s build_type=Release
-        displayName: "Create Conan packages"
+          conan create . -s build_type=RelWithDebInfo
+        displayName: "Conan: Create packages"
 
   - job: mkdocs
     pool:

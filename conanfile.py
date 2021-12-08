@@ -13,12 +13,12 @@ class SsfConan(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
+    default_options = {"shared": True}
 
     generators = "cmake_find_package"
     # requires = [
     #     "catch2/2.13.0"
     # ]
-    default_options = {"shared": True}
 
     exports_sources = [
         "readme.md", "LICENSE",  # for CPack
@@ -34,6 +34,8 @@ class SsfConan(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
         tc.variables["BUILD_TESTING"] = "ON"
+        if self.settings.os == "Windows":
+            tc.variables["INSTALL_FOR_DEPLOY"] = "OFF"
         tc.generate()
 
     # https://docs.conan.io/en/latest/reference/build_helpers/cmake.html
@@ -55,7 +57,16 @@ class SsfConan(ConanFile):
         if self.settings.os == "Windows":
             cmake.append_vcvars = True
         cmake.install()
+        if self.settings.build_type == "RelWithDebInfo":  # -s build_type=RelWithDebInfo
+            self.copy("ssf.pdb", dst="bin", keep_path=False)
 
+    # https://docs.conan.io/en/latest/reference/conanfile/methods.html#package-info
     def package_info(self):
+        self.cpp_info.includedirs = ["include"]
+        self.cpp_info.libdirs = ["lib"]
+        self.cpp_info.bindirs = ["bin"]
+        self.cpp_info.defines = []
+        self.cpp_info.cxxflags = []
+        if self.options.shared == True:
+            self.cpp_info.sharedlinkflags = []
         self.cpp_info.libs = ["ssf"]
-        self.cpp_info
