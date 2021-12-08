@@ -102,7 +102,7 @@ uint32_t socket_get_peer(int64_t sd, sockaddr_in6& local) noexcept {
 
 uint32_t socket_set_option(int64_t sd, int64_t level, //
                            int64_t option, int64_t value) noexcept {
-    if (auto ec = ::setsockopt(sd, level, option, (char*)&value, sizeof(value)))
+    if (auto ec = ::setsockopt(sd, static_cast<int>(level), static_cast<int>(option), (char*)&value, sizeof(value)))
         return socket_recent();
     return 0;
 }
@@ -115,23 +115,21 @@ uint32_t socket_set_option_nodelay(int64_t sd) noexcept {
     return socket_set_option(sd, IPPROTO_TCP, TCP_NODELAY, true);
 }
 
-uint32_t socket_set_option_timout(int64_t sd, chrono::microseconds us,
-                                  int64_t option) noexcept {
+uint32_t socket_set_option_timout(int64_t sd, chrono::microseconds us, int64_t option) noexcept {
     const auto s = chrono::duration_cast<chrono::seconds>(us);
     us -= s;
     timeval timeout{};
-    timeout.tv_sec = s.count();
-    timeout.tv_usec = us.count();
+    timeout.tv_sec = static_cast<decltype(timeout.tv_sec)>(s.count());
+    timeout.tv_usec = static_cast<decltype(timeout.tv_usec)>(us.count());
 
-    if (::setsockopt(sd, SOL_SOCKET, option, //
+    if (::setsockopt(sd, SOL_SOCKET, static_cast<int>(option), //
                      (char*)&timeout, sizeof(timeval)) != 0) {
         return socket_recent();
     }
     return 0;
 }
 
-uint32_t socket_set_option_timout(int64_t sd, uint32_t us,
-                                  int64_t option) noexcept {
+uint32_t socket_set_option_timout(int64_t sd, uint32_t us, int64_t option) noexcept {
     return socket_set_option_timout(sd, chrono::microseconds{us}, option);
 }
 
@@ -176,8 +174,7 @@ uint32_t socket_recent() noexcept {
 }
 
 bool socket_would_block(int ec) noexcept {
-    return ec == WSAEWOULDBLOCK || ec == EWOULDBLOCK || ec == EINPROGRESS ||
-           ec == ERROR_IO_PENDING;
+    return ec == WSAEWOULDBLOCK || ec == EWOULDBLOCK || ec == EINPROGRESS || ec == ERROR_IO_PENDING;
 }
 
 uint32_t socket_close(int64_t sd) noexcept {
