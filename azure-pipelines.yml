@@ -48,10 +48,8 @@ jobs:
     variables:
       configuration: Debug
     steps:
-      - powershell: |
-          brew install ninja
-          python3 -m pip install --user conan
-        displayName: "Setup: Homebrew, Python3 packages"
+      - powershell: brew install ninja conan
+        displayName: "Setup: Homebrew packages"
       - task: CMake@1
         displayName: "CMake: Configure"
         inputs:
@@ -66,7 +64,8 @@ jobs:
         displayName: "CTest"
       - powershell: |
           conan create . -s build_type=Debug
-        displayName: "Create Conan package(binary)"
+          conan create . -s build_type=Release
+        displayName: "Create Conan packages"
 
   - job: mkdocs
     pool:
