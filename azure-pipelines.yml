@@ -8,6 +8,11 @@
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted
 #
 
+trigger:
+  branches:
+    exclude:
+      - gh-pages
+
 schedules:
   - cron: "30 4 * * 4"
     displayName: "Weekly check"
