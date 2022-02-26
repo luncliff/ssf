@@ -19,10 +19,13 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_TOOLCHAIN_FILE": {
                     "type": "FILEPATH",
-                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+                    "value": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
                 },
                 "VCPKG_TARGET_TRIPLET": "x64-windows",
                 "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
+            },
+            "environment": {
+                "EXPERIMENTAL": "Azure Pipelines"
             }
         },
         {
@@ -88,6 +91,23 @@
             "debug": {
                 "output": false
             }
+        },
+        {
+            "name": "x64-osx-debug",
+            "displayName": "x64-osx/debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-x64-osx",
+            "cacheVariables": {
+                "BUILD_TESTING": "ON",
+                "BUILD_SHARED_LIBS": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "EXPERIMENTAL": "true"
+            },
+            "debug": {
+                "output": true
+            }
         }
     ],
     "buildPresets": [
@@ -115,6 +135,11 @@
             "name": "x64-clang-debug",
             "configuration": "Debug",
             "configurePreset": "x64-clang-debug"
+        },
+        {
+            "name": "x64-osx-debug",
+            "configuration": "Debug",
+            "configurePreset": "x64-osx-debug"
         }
     ],
     "testPresets": [
@@ -140,6 +165,14 @@
             "execution": {
                 "noTestsAction": "error",
                 "stopOnFailure": false
+            }
+        },
+        {
+            "name": "x64-osx-debug",
+            "configurePreset": "x64-osx-debug",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
             }
         }
     ]

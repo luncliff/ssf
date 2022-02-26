@@ -84,20 +84,21 @@ jobs:
       vmImage: "macos-10.15"
     variables:
       configuration: Debug
+      cmake.preset: x64-osx-debug
     steps:
       - powershell: brew install ninja conan
         displayName: "Setup: Homebrew packages"
       - task: CMake@1
         displayName: "CMake: Configure"
         inputs:
-          cmakeArgs: --preset x64-osx-debug -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
+          cmakeArgs: --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
           workingDirectory: "."
       - task: CMake@1
         displayName: "CMake: Build/Install"
         inputs:
-          cmakeArgs: --build --preset x64-osx-debug --target install
+          cmakeArgs: --build --preset $(cmake.preset) --target install
           workingDirectory: "."
-      - powershell: ctest --preset x64-osx-debug --output-on-failure
+      - powershell: ctest --preset $(cmake.preset) --output-on-failure
         displayName: "CTest"
       - powershell: |
           conan create . -s build_type=Debug
