@@ -58,6 +58,11 @@ jobs:
         debug_x64:
           cmake.preset: x64-clang-debug
     steps:
+      - task: ChocolateyCommand@0
+        inputs:
+          command: "install"
+          installPackageId: "ninja"
+          installInstallArgs: "--no-progress --yes"
       - task: CMake@1
         displayName: "CMake: Configure"
         inputs:
