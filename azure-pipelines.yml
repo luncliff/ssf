@@ -21,16 +21,17 @@ schedules:
         - main
 
 jobs:
-  - job: vs2019_msvc142
+  - job: vs2022_msvc143
     pool:
-      vmImage: "windows-2019"
+      vmImage: "windows-2022"
     variables:
       configuration: Debug
+      cmake.preset: x64-windows-debug
     steps:
       - task: CMake@1
         displayName: "CMake: Configure"
         inputs:
-          cmakeArgs: --preset x64-windows-debug -DCMAKE_SYSTEM_VERSION="10.0.19041.0" -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)" -DINSTALL_FOR_DEPLOY=true
+          cmakeArgs: --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
           workingDirectory: "."
       - task: MSBuild@1
         inputs:
@@ -38,14 +39,40 @@ jobs:
           msbuildArchitecture: x64
           platform: x64
           configuration: $(configuration)
-          msbuildArguments: "/p:platformtoolset=v142"
+          msbuildArguments: "/p:platformtoolset=v143"
       - task: CMake@1
         displayName: "CMake: Install"
         inputs:
-          cmakeArgs: --build --preset x64-windows-debug --target install
+          cmakeArgs: --build --preset $(cmake.preset) --target install
           workingDirectory: "."
-      - powershell: ctest --preset x64-windows-debug --output-on-failure
+      - powershell: ctest --preset $(cmake.preset) --output-on-failure
         displayName: "CTest"
+
+  - job: vs2022_clang13
+    pool:
+      vmImage: "windows-2022"
+    strategy:
+      matrix:
+        debug_x86:
+          cmake.preset: x86-clang-debug
+        debug_x64:
+          cmake.preset: x64-clang-debug
+    steps:
+      - task: CMake@1
+        displayName: "CMake: Configure"
+        inputs:
+          cmakeArgs: --preset $(cmake.preset)
+          workingDirectory: "."
+      - task: CMake@1
+        displayName: "CMake: Build"
+        inputs:
+          cmakeArgs: --build --preset $(cmake.preset)
+          workingDirectory: "."
+      - task: CMake@1
+        displayName: "CMake: Install"
+        inputs:
+          cmakeArgs: --build --target install --preset $(cmake.preset)
+          workingDirectory: "."
 
   - job: macos15_appleclang
     pool:
@@ -103,6 +130,6 @@ jobs:
           PathtoPublish: "$(Build.SourcesDirectory)/docs"
           ArtifactName: "docs"
     dependsOn:
-      - vs2019_msvc142
+      - vs2022_msvc143
       - macos15_appleclang
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
