@@ -2,57 +2,97 @@
     "version": 3,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 20,
-        "patch": 5
+        "minor": 21,
+        "patch": 0
     },
     "configurePresets": [
         {
             "name": "x64-windows-debug",
-            "displayName": "x64-windows/debug",
-            "generator": "Visual Studio 16 2019",
+            "displayName": "x64(msvc)/debug",
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
             "binaryDir": "${sourceDir}/build-x64-windows",
+            "installDir": "${sourceDir}/install",
             "cacheVariables": {
                 "BUILD_TESTING": "ON",
                 "BUILD_SHARED_LIBS": "ON",
-                "CMAKE_VS_PLATFORM_NAME_DEFAULT": "x64",
-                "//CMAKE_SYSTEM_VERSION": "10.0.18362.0",
-                "CMAKE_BUILD_TYPE": "Debug"
-            },
-            "environment": {
-                "EXPERIMENTAL": "true"
-            },
-            "debug": {
-                "output": true
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "type": "FILEPATH",
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+                },
+                "VCPKG_TARGET_TRIPLET": "x64-windows",
+                "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
             }
         },
         {
-            "name": "x64-osx-debug",
-            "displayName": "x64-osx/debug",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-x64-osx",
+            "name": "x64-windows-release",
+            "displayName": "x64(msvc)/release",
+            "inherits": "x64-windows-debug",
+            "installDir": "${sourceDir}/install",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        },
+        {
+            "name": "x86-windows-debug",
+            "displayName": "x86(msvc)/debug",
+            "inherits": "x64-windows-debug",
+            "generator": "Visual Studio 17 2022",
+            "architecture": "Win32",
+            "binaryDir": "${sourceDir}/build-x86-windows",
+            "installDir": "${sourceDir}/install",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x86-windows"
+            }
+        },
+        {
+            "name": "x86-clang-debug",
+            "displayName": "x86(clang-cl)/debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-x86-windows",
+            "installDir": "${sourceDir}/install",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "CMAKE_CXX_FLAGS": "-fms-compatibility /EHs",
+                "CMAKE_EXE_LINKER_FLAGS": "/machine:x86",
+                "CMAKE_SHARED_LINKER_FLAGS": "/machine:x86",
+                "CMAKE_STATIC_LINKER_FLAGS": "/machine:x86",
                 "BUILD_TESTING": "ON",
                 "BUILD_SHARED_LIBS": "ON",
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "VCPKG_TARGET_TRIPLET": "x86-windows",
+                "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
             },
             "environment": {
-                "EXPERIMENTAL": "true"
             },
             "debug": {
-                "output": true
+                "output": false
             }
         }
     ],
     "buildPresets": [
         {
             "name": "x64-windows-debug",
-            "configurePreset": "x64-windows-debug",
-            "configuration": "Debug"
+            "configuration": "Debug",
+            "configurePreset": "x64-windows-debug"
         },
         {
-            "name": "x64-osx-debug",
-            "configurePreset": "x64-osx-debug",
-            "configuration": "Debug"
+            "name": "x64-windows-release",
+            "configuration": "Release",
+            "configurePreset": "x64-windows-release"
+        },
+        {
+            "name": "x86-windows-debug",
+            "configuration": "Debug",
+            "configurePreset": "x86-windows-debug"
+        },
+        {
+            "name": "x86-clang-debug",
+            "configuration": "Debug",
+            "configurePreset": "x86-clang-debug"
         }
     ],
     "testPresets": [
@@ -69,8 +109,8 @@
             }
         },
         {
-            "name": "x64-osx-debug",
-            "configurePreset": "x64-osx-debug",
+            "name": "x86-clang-debug",
+            "configurePreset": "x86-clang-debug",
             "configuration": "Debug",
             "output": {
                 "outputOnFailure": true
