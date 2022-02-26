@@ -53,20 +53,37 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-x86-windows",
             "installDir": "${sourceDir}/install",
-            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang-cl",
-                "CMAKE_CXX_FLAGS": "-fms-compatibility /EHs",
-                "CMAKE_EXE_LINKER_FLAGS": "/machine:x86",
-                "CMAKE_SHARED_LINKER_FLAGS": "/machine:x86",
-                "CMAKE_STATIC_LINKER_FLAGS": "/machine:x86",
                 "BUILD_TESTING": "ON",
                 "BUILD_SHARED_LIBS": "ON",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "VCPKG_TARGET_TRIPLET": "x86-windows",
                 "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
             },
             "environment": {
+                "CXXFLAGS": "-m32 -fms-compatibility",
+                "LDFLAGS": "/machine:x86"
+            },
+            "debug": {
+                "output": false
+            }
+        },
+        {
+            "name": "x64-clang-debug",
+            "displayName": "x64(clang-cl)/debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-x66-windows",
+            "installDir": "${sourceDir}/install",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "BUILD_TESTING": "ON",
+                "BUILD_SHARED_LIBS": "ON",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
+            },
+            "environment": {
+                "CXXFLAGS": "-m64 -fms-compatibility",
+                "LDFLAGS": "/machine:x64"
             },
             "debug": {
                 "output": false
@@ -93,6 +110,11 @@
             "name": "x86-clang-debug",
             "configuration": "Debug",
             "configurePreset": "x86-clang-debug"
+        },
+        {
+            "name": "x64-clang-debug",
+            "configuration": "Debug",
+            "configurePreset": "x64-clang-debug"
         }
     ],
     "testPresets": [
