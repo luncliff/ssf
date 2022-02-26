@@ -79,6 +79,42 @@ jobs:
           cmakeArgs: --build --target install --preset $(cmake.preset)
           workingDirectory: "."
 
+  - job: vs2019_clang
+    pool:
+      vmImage: "windows-2019"
+    strategy:
+      matrix:
+        debug_x86:
+          cmake.preset: x86-clang-debug-vs2019
+        debug_x64:
+          cmake.preset: x64-clang-debug-vs2019
+    steps:
+      - task: ChocolateyCommand@0
+        inputs:
+          command: "install"
+          installPackageId: "ninja"
+          installInstallArgs: "--no-progress --yes"
+      - task: ChocolateyCommand@0
+        inputs:
+          command: "install"
+          installPackageId: "llvm"
+          installInstallArgs: "--no-progress --yes"
+      - task: CMake@1
+        displayName: "CMake: Configure"
+        inputs:
+          cmakeArgs: --preset $(cmake.preset)
+          workingDirectory: "."
+      - task: CMake@1
+        displayName: "CMake: Build"
+        inputs:
+          cmakeArgs: --build --preset $(cmake.preset)
+          workingDirectory: "."
+      - task: CMake@1
+        displayName: "CMake: Install"
+        inputs:
+          cmakeArgs: --build --target install --preset $(cmake.preset)
+          workingDirectory: "."
+
   - job: macos15_appleclang
     pool:
       vmImage: "macos-10.15"

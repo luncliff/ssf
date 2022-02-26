@@ -68,14 +68,14 @@
                 "LDFLAGS": "/machine:x86"
             },
             "debug": {
-                "output": false
+                "output": true
             }
         },
         {
             "name": "x64-clang-debug",
             "displayName": "x64(clang-cl)/debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-x66-windows",
+            "binaryDir": "${sourceDir}/build-x64-windows",
             "installDir": "${sourceDir}/install",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang-cl",
@@ -89,8 +89,20 @@
                 "LDFLAGS": "/machine:x64"
             },
             "debug": {
-                "output": false
+                "output": true
             }
+        },
+        {
+            "name": "x86-clang-debug-vs2019",
+            "displayName": "vs2019/x86(clang-cl)/debug",
+            "generator": "Ninja",
+            "inherits": "x86-clang-debug"
+        },
+        {
+            "name": "x64-clang-debug-vs2019",
+            "displayName": "vs2019/x64(clang-cl)/debug",
+            "generator": "Ninja",
+            "inherits": "x64-clang-debug"
         },
         {
             "name": "x64-osx-debug",
