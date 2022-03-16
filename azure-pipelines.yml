@@ -77,12 +77,8 @@ jobs:
           echo $(detected.vcvarsPath)
           call "$(detected.vcvarsPath)" $(vcvars.arg)
           cmake --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
-        displayName: "CMake: Configure(vcvarsall)"
-      - task: CMake@1
-        displayName: "CMake: Build"
-        inputs:
-          cmakeArgs: --build --preset $(cmake.preset)
-          workingDirectory: "."
+          cmake --build --preset $(cmake.preset)
+        displayName: "CMake: Configure/Build(vcvarsall)"
       - task: CMake@1
         displayName: "CMake: Install"
         inputs:
@@ -95,8 +91,10 @@ jobs:
     strategy:
       matrix:
         debug_x86:
+          vcvars.arg: x86
           cmake.preset: x86-clang-debug-vs2019
         debug_x64:
+          vcvars.arg: x64
           cmake.preset: x64-clang-debug-vs2019
     steps:
       - task: ChocolateyCommand@0
@@ -109,16 +107,18 @@ jobs:
           command: "install"
           installPackageId: "llvm"
           installInstallArgs: "--no-progress --yes"
-      - task: CMake@1
-        displayName: "CMake: Configure"
-        inputs:
-          cmakeArgs: --preset $(cmake.preset)
-          workingDirectory: "."
-      - task: CMake@1
-        displayName: "CMake: Build"
-        inputs:
-          cmakeArgs: --build --preset $(cmake.preset)
-          workingDirectory: "."
+      - powershell: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $installPath = &$vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          echo "##vso[task.setvariable variable=vcvarsPath;isOutput=true]$installPath\VC\Auxiliary\Build\vcvarsall.bat"
+        name: detected
+        displayName: "PowerShell: Search vcvarsall.bat"
+      - script: | # using Cmdlet
+          echo $(detected.vcvarsPath)
+          call "$(detected.vcvarsPath)" $(vcvars.arg)
+          cmake --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
+          cmake --build --preset $(cmake.preset)
+        displayName: "CMake: Configure/Build(vcvarsall)"
       - task: CMake@1
         displayName: "CMake: Install"
         inputs:
