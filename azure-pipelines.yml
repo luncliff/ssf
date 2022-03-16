@@ -63,11 +63,20 @@ jobs:
           command: "install"
           installPackageId: "ninja"
           installInstallArgs: "--no-progress --yes"
-      - task: CMake@1
-        displayName: "CMake: Configure"
-        inputs:
-          cmakeArgs: --preset $(cmake.preset)
-          workingDirectory: "."
+      # see https://www.cicoria.com/using-vcvars64-vcvars-bat-from-powershell-and-azure-devops/
+      # see https://github.com/Microsoft/azure-pipelines-tasks/issues/9737
+      - powershell: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $installPath = &$vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          # &$installPath\VC\Auxiliary\Build\vcvarsall.bat x86
+          echo "##vso[task.setvariable variable=vcvarsPath;isOutput=true]$installPath\VC\Auxiliary\Build\vcvarsall.bat"
+        name: detected
+        displayName: "PowerShell: Search vcvarsall.bat"
+      - powershell: |
+          Write-Output $detected.vcvarsPath
+          & $detected.vcvarsPath x86
+          cmake --preset x86-clang-debug -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
+        displayName: "CMake: Configure(vcvarsall)"
       - task: CMake@1
         displayName: "CMake: Build"
         inputs:

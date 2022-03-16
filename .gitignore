@@ -7,7 +7,7 @@ build
 build-*
 
 .vscode
-
+.vs
 *.zip
 
 # Created by https://www.toptal.com/developers/gitignore/api/conan,cmake,python,c++,visualstudiocode
