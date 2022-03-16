@@ -93,18 +93,6 @@
             }
         },
         {
-            "name": "x86-clang-debug-vs2019",
-            "displayName": "vs2019/x86(clang-cl)/debug",
-            "generator": "Ninja",
-            "inherits": "x86-clang-debug"
-        },
-        {
-            "name": "x64-clang-debug-vs2019",
-            "displayName": "vs2019/x64(clang-cl)/debug",
-            "generator": "Ninja",
-            "inherits": "x64-clang-debug"
-        },
-        {
             "name": "x64-osx-debug",
             "displayName": "x64-osx/debug",
             "generator": "Ninja",

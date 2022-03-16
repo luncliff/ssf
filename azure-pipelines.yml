@@ -92,10 +92,10 @@ jobs:
       matrix:
         debug_x86:
           vcvars.arg: x86
-          cmake.preset: x86-clang-debug-vs2019
+          cmake.preset: x86-clang-debug
         debug_x64:
           vcvars.arg: x64
-          cmake.preset: x64-clang-debug-vs2019
+          cmake.preset: x64-clang-debug
     steps:
       - task: ChocolateyCommand@0
         inputs:
