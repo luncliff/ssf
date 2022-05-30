@@ -27,7 +27,14 @@ jobs:
     variables:
       configuration: Debug
       cmake.preset: x64-windows-debug
+      vcpkg.target.triplet: x64-windows
     steps:
+      - task: run-vcpkg@0
+        inputs:
+          vcpkgArguments: "vcpkg-cmake"
+          vcpkgDirectory: $(vcpkg.installation.root)
+        env:
+          VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       - task: CMake@1
         displayName: "CMake: Configure"
         inputs:
@@ -56,15 +63,23 @@ jobs:
         debug_x86:
           vcvars.arg: x86
           cmake.preset: x86-clang-debug
+          vcpkg.target.triplet: x86-windows
         debug_x64:
           vcvars.arg: x64
           cmake.preset: x64-clang-debug
+          vcpkg.target.triplet: x64-windows
     steps:
       - task: ChocolateyCommand@0
         inputs:
           command: "install"
           installPackageId: "ninja"
           installInstallArgs: "--no-progress --yes"
+      - task: run-vcpkg@0
+        inputs:
+          vcpkgArguments: "vcpkg-cmake"
+          vcpkgDirectory: $(vcpkg.installation.root)
+        env:
+          VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       # see https://www.cicoria.com/using-vcvars64-vcvars-bat-from-powershell-and-azure-devops/
       - powershell: |
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -84,46 +99,6 @@ jobs:
         inputs:
           cmakeArgs: --build --target install --preset $(cmake.preset)
           workingDirectory: "."
-
-  # - job: vs2019_clang
-  #   pool:
-  #     vmImage: "windows-2019"
-  #   strategy:
-  #     matrix:
-  #       debug_x86:
-  #         vcvars.arg: x86
-  #         cmake.preset: x86-clang-debug
-  #       debug_x64:
-  #         vcvars.arg: x64
-  #         cmake.preset: x64-clang-debug
-  #   steps:
-  #     - task: ChocolateyCommand@0
-  #       inputs:
-  #         command: "install"
-  #         installPackageId: "ninja"
-  #         installInstallArgs: "--no-progress --yes"
-  #     - task: ChocolateyCommand@0
-  #       inputs:
-  #         command: "install"
-  #         installPackageId: "llvm"
-  #         installInstallArgs: "--no-progress --yes"
-  #     - powershell: |
-  #         $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-  #         $installPath = &$vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-  #         echo "##vso[task.setvariable variable=vcvarsPath;isOutput=true]$installPath\VC\Auxiliary\Build\vcvarsall.bat"
-  #       name: detected
-  #       displayName: "PowerShell: Search vcvarsall.bat"
-  #     - script: | # using Cmdlet
-  #         echo $(detected.vcvarsPath)
-  #         call "$(detected.vcvarsPath)" $(vcvars.arg)
-  #         cmake --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
-  #         cmake --build --preset $(cmake.preset)
-  #       displayName: "CMake: Configure/Build(vcvarsall)"
-  #     - task: CMake@1
-  #       displayName: "CMake: Install"
-  #       inputs:
-  #         cmakeArgs: --build --target install --preset $(cmake.preset)
-  #         workingDirectory: "."
 
   - job: macos15_appleclang
     pool:
