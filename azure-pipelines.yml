@@ -32,7 +32,7 @@ jobs:
       - task: run-vcpkg@0
         inputs:
           vcpkgArguments: "vcpkg-cmake"
-          vcpkgDirectory: $(vcpkg.installation.root)
+          vcpkgGitCommitId: 14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44 # 2022.05.10
         env:
           VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       - task: CMake@1
@@ -77,7 +77,7 @@ jobs:
       - task: run-vcpkg@0
         inputs:
           vcpkgArguments: "vcpkg-cmake"
-          vcpkgDirectory: $(vcpkg.installation.root)
+          vcpkgGitCommitId: 14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44 # 2022.05.10
         env:
           VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       # see https://www.cicoria.com/using-vcvars64-vcvars-bat-from-powershell-and-azure-devops/
