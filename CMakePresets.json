@@ -23,6 +23,11 @@
             },
             "environment": {
                 "EXPERIMENTAL": "Azure Pipelines"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
             }
         },
         {
@@ -78,6 +83,11 @@
             },
             "debug": {
                 "output": true
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
             }
         },
         {
@@ -95,6 +105,11 @@
             },
             "debug": {
                 "output": true
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
             }
         }
     ],
