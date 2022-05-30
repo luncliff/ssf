@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20.5)
+cmake_minimum_required(VERSION 3.21.0)
 project(ssf VERSION 1.0.2 LANGUAGES CXX)
 message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
