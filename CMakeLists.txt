@@ -35,7 +35,7 @@ PUBLIC
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     target_compile_options(ssf
     PUBLIC
