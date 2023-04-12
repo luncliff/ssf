@@ -1,0 +1,24 @@
+name: "CMake-Mac"
+
+on:
+  push:
+    branches-ignore:    
+      - 'docs'
+  pull_request:
+    branches-ignore:    
+      - 'docs'
+
+jobs:
+  build:
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
+    - name: run-cmake
+      uses: lukka/run-cmake@v10.3
+      with:
+        cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
+        configurePreset: x64-osx-debug
+        buildPreset: x64-osx-debug
+        testPreset: x64-osx-debug
+
