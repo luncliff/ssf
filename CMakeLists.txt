@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21.0)
-project(ssf VERSION 1.0.2 LANGUAGES CXX)
+project(ssf VERSION 1.1.0 LANGUAGES CXX)
 message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
 # option(BUILD_SHARED_LIBS    "https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html" ON)
@@ -7,6 +7,8 @@ option(BUILD_TESTING        "Build test program" ON) # include(CTest)
 option(INSTALL_FOR_DEPLOY   "Install UCRT, Debug DLLs(for Windows)" OFF)
 
 include(GNUInstallDirs)
+set(CMAKE_CXX_STANDARD_REQUIRED OFF)
+
 if(WIN32 AND INSTALL_FOR_DEPLOY)
     # see "C:/Program Files (x86)/Windows Kits/10/Redist/..."
     # 10.0.18362.0, 10.0.19041.0, 10.0.20348.0 ...
@@ -26,7 +28,7 @@ add_library(ssf
 
 set_target_properties(ssf
 PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 20
     PUBLIC_HEADER "${hdrs}"
 )
 
@@ -35,14 +37,10 @@ PUBLIC
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
-    target_compile_options(ssf
-    PUBLIC
-        -std=gnu++14
-    )
     target_link_libraries(ssf
-    PUBLIC
+    PRIVATE
         stdc++
     )
 elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
@@ -50,7 +48,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
         # clang-cl is not considered for now ...
     else()
         target_compile_options(ssf
-        PUBLIC
+        PRIVATE
             -stdlib=libc++
         )
     endif()
@@ -69,11 +67,6 @@ if(WIN32)
     target_link_libraries(ssf
     PUBLIC
         ws2_32
-    )
-elseif(APPLE)
-    target_link_libraries(ssf
-    PUBLIC
-        c++
     )
 endif()
 
@@ -98,9 +91,7 @@ write_basic_package_version_file(${VERSION_FILE_PATH}
     VERSION         ${PROJECT_VERSION}
     COMPATIBILITY   SameMajorVersion
 )
-install(FILES       ${VERSION_FILE_PATH} 
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}
-)
+install(FILES   ${VERSION_FILE_PATH}    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME})
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
@@ -122,7 +113,7 @@ add_executable(ssf_test
 
 set_target_properties(ssf_test
 PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 20
 )
 
 target_link_libraries(ssf_test

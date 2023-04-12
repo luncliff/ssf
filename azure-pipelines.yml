@@ -24,15 +24,16 @@ jobs:
   - job: vs2022_msvc143
     pool:
       vmImage: "windows-2022"
-    variables:
-      configuration: Debug
-      cmake.preset: x64-windows-debug
-      vcpkg.target.triplet: x64-windows
+    strategy:
+      matrix:
+        debug_x64:
+          cmake.preset: x64-windows
+          vcpkg.target.triplet: x64-windows
     steps:
       - task: run-vcpkg@0
         inputs:
           vcpkgArguments: "vcpkg-cmake"
-          vcpkgGitCommitId: 14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44 # 2022.05.10
+          vcpkgGitCommitId: a7b6122f6b6504d16d96117336a0562693579933 # 2023.02.24
         env:
           VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       - task: CMake@1
@@ -45,14 +46,14 @@ jobs:
           solution: "build-x64-windows/ssf.sln"
           msbuildArchitecture: x64
           platform: x64
-          configuration: $(configuration)
+          configuration: Debug
           msbuildArguments: "/p:platformtoolset=v143"
       - task: CMake@1
         displayName: "CMake: Install"
         inputs:
-          cmakeArgs: --build --preset $(cmake.preset) --target install
+          cmakeArgs: --build --target install --preset $(cmake.preset)-debug
           workingDirectory: "."
-      - powershell: ctest --preset $(cmake.preset) --output-on-failure
+      - powershell: ctest --preset $(cmake.preset)-debug --output-on-failure
         displayName: "CTest"
 
   - job: vs2022_clang13
@@ -60,13 +61,9 @@ jobs:
       vmImage: "windows-2022"
     strategy:
       matrix:
-        debug_x86:
-          vcvars.arg: x86
-          cmake.preset: x86-clang-debug
-          vcpkg.target.triplet: x86-windows
         debug_x64:
           vcvars.arg: x64
-          cmake.preset: x64-clang-debug
+          cmake.preset: x64-clangcl
           vcpkg.target.triplet: x64-windows
     steps:
       - task: ChocolateyCommand@0
@@ -77,7 +74,7 @@ jobs:
       - task: run-vcpkg@0
         inputs:
           vcpkgArguments: "vcpkg-cmake"
-          vcpkgGitCommitId: 14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44 # 2022.05.10
+          vcpkgGitCommitId: a7b6122f6b6504d16d96117336a0562693579933 # 2023.02.24
         env:
           VCPKG_DEFAULT_TRIPLET: $(vcpkg.target.triplet)
       # see https://www.cicoria.com/using-vcvars64-vcvars-bat-from-powershell-and-azure-devops/
@@ -92,71 +89,71 @@ jobs:
           echo $(detected.vcvarsPath)
           call "$(detected.vcvarsPath)" $(vcvars.arg)
           cmake --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
-          cmake --build --preset $(cmake.preset)
+          cmake --build --preset $(cmake.preset)-debug
         displayName: "CMake: Configure/Build(vcvarsall)"
       - task: CMake@1
         displayName: "CMake: Install"
         inputs:
-          cmakeArgs: --build --target install --preset $(cmake.preset)
+          cmakeArgs: --build --target install --preset $(cmake.preset)-debug
           workingDirectory: "."
 
-  - job: macos15_appleclang
-    pool:
-      vmImage: "macos-10.15"
-    variables:
-      configuration: Debug
-      cmake.preset: x64-osx-debug
-    steps:
-      - powershell: brew install ninja conan
-        displayName: "Setup: Homebrew packages"
-      - task: CMake@1
-        displayName: "CMake: Configure"
-        inputs:
-          cmakeArgs: --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
-          workingDirectory: "."
-      - task: CMake@1
-        displayName: "CMake: Build/Install"
-        inputs:
-          cmakeArgs: --build --preset $(cmake.preset) --target install
-          workingDirectory: "."
-      - powershell: ctest --preset $(cmake.preset) --output-on-failure
-        displayName: "CTest"
-      - powershell: |
-          conan create . -s build_type=Debug
-          conan create . -s build_type=Release
-          conan create . -s build_type=RelWithDebInfo
-        displayName: "Conan: Create packages"
+  # - job: macos15_appleclang
+  #   pool:
+  #     vmImage: "macos-10.15"
+  #   variables:
+  #     configuration: Debug
+  #     cmake.preset: x64-osx-debug
+  #   steps:
+  #     - powershell: brew install ninja conan
+  #       displayName: "Setup: Homebrew packages"
+  #     - task: CMake@1
+  #       displayName: "CMake: Configure"
+  #       inputs:
+  #         cmakeArgs: --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
+  #         workingDirectory: "."
+  #     - task: CMake@1
+  #       displayName: "CMake: Build/Install"
+  #       inputs:
+  #         cmakeArgs: --build --preset $(cmake.preset) --target install
+  #         workingDirectory: "."
+  #     - powershell: ctest --preset $(cmake.preset) --output-on-failure
+  #       displayName: "CTest"
+  #     - powershell: |
+  #         conan create . -s build_type=Debug
+  #         conan create . -s build_type=Release
+  #         conan create . -s build_type=RelWithDebInfo
+  #       displayName: "Conan: Create packages"
 
-  - job: mkdocs
-    pool:
-      vmImage: "macos-10.15"
-    steps:
-      - powershell: |
-          brew install doxygen
-          python3 -m pip install --user -r requirements.txt
-        displayName: "Setup: Homebrew, Python3 packages"
-      - powershell: |
-          wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.4.0/doxybook2-osx-amd64-v1.4.0.zip
-          unzip ./doxybook2-osx-amd64-v1.4.0.zip -d externals
-        displayName: "Setup: Doxybook2 1.4.0"
-      - powershell: |
-          doxygen ./docs/Doxyfile
-          ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
-        displayName: "Run Doxygen and Doxybook2"
-      - powershell: python3 -m mkdocs build # todo: gh-deploy
-      # - task: ArchiveFiles@2
-      #   inputs:
-      #     rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
-      #     includeRootFolder: false
-      #     archiveType: "zip"
-      #     archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
-      #     replaceExistingArchive: true
-      - task: PublishBuildArtifacts@1
-        inputs:
-          # PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-          PathtoPublish: "$(Build.SourcesDirectory)/docs"
-          ArtifactName: "docs"
-    dependsOn:
-      - vs2022_msvc143
-      - macos15_appleclang
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  # - job: mkdocs
+  #   pool:
+  #     vmImage: "macos-10.15"
+  #   steps:
+  #     - powershell: |
+  #         brew install doxygen
+  #         python3 -m pip install --user -r requirements.txt
+  #       displayName: "Setup: Homebrew, Python3 packages"
+  #     - powershell: |
+  #         wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.4.0/doxybook2-osx-amd64-v1.4.0.zip
+  #         unzip ./doxybook2-osx-amd64-v1.4.0.zip -d externals
+  #       displayName: "Setup: Doxybook2 1.4.0"
+  #     - powershell: |
+  #         doxygen ./docs/Doxyfile
+  #         ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
+  #       displayName: "Run Doxygen and Doxybook2"
+  #     - powershell: python3 -m mkdocs build # todo: gh-deploy
+  #     # - task: ArchiveFiles@2
+  #     #   inputs:
+  #     #     rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
+  #     #     includeRootFolder: false
+  #     #     archiveType: "zip"
+  #     #     archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
+  #     #     replaceExistingArchive: true
+  #     - task: PublishBuildArtifacts@1
+  #       inputs:
+  #         # PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+  #         PathtoPublish: "$(Build.SourcesDirectory)/docs"
+  #         ArtifactName: "docs"
+  #   dependsOn:
+  #     - vs2022_msvc143
+  #     - macos15_appleclang
+  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
