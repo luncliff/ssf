@@ -24,10 +24,11 @@ jobs:
   - job: vs2022_msvc143
     pool:
       vmImage: "windows-2022"
-    variables:
-      configuration: Debug
-      cmake.preset: x64-windows
-      vcpkg.target.triplet: x64-windows
+    strategy:
+      matrix:
+        debug_x64:
+          cmake.preset: x64-windows
+          vcpkg.target.triplet: x64-windows
     steps:
       - task: run-vcpkg@0
         inputs:
@@ -45,7 +46,7 @@ jobs:
           solution: "build-x64-windows/ssf.sln"
           msbuildArchitecture: x64
           platform: x64
-          configuration: $(configuration)
+          configuration: Debug
           msbuildArguments: "/p:platformtoolset=v143"
       - task: CMake@1
         displayName: "CMake: Install"
