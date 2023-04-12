@@ -97,63 +97,33 @@ jobs:
           cmakeArgs: --build --target install --preset $(cmake.preset)-debug
           workingDirectory: "."
 
-  # - job: macos15_appleclang
-  #   pool:
-  #     vmImage: "macos-10.15"
-  #   variables:
-  #     configuration: Debug
-  #     cmake.preset: x64-osx-debug
-  #   steps:
-  #     - powershell: brew install ninja conan
-  #       displayName: "Setup: Homebrew packages"
-  #     - task: CMake@1
-  #       displayName: "CMake: Configure"
-  #       inputs:
-  #         cmakeArgs: --preset $(cmake.preset) -DCMAKE_INSTALL_PREFIX:PATH="$(Build.ArtifactStagingDirectory)"
-  #         workingDirectory: "."
-  #     - task: CMake@1
-  #       displayName: "CMake: Build/Install"
-  #       inputs:
-  #         cmakeArgs: --build --preset $(cmake.preset) --target install
-  #         workingDirectory: "."
-  #     - powershell: ctest --preset $(cmake.preset) --output-on-failure
-  #       displayName: "CTest"
-  #     - powershell: |
-  #         conan create . -s build_type=Debug
-  #         conan create . -s build_type=Release
-  #         conan create . -s build_type=RelWithDebInfo
-  #       displayName: "Conan: Create packages"
-
-  # - job: mkdocs
-  #   pool:
-  #     vmImage: "macos-10.15"
-  #   steps:
-  #     - powershell: |
-  #         brew install doxygen
-  #         python3 -m pip install --user -r requirements.txt
-  #       displayName: "Setup: Homebrew, Python3 packages"
-  #     - powershell: |
-  #         wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.4.0/doxybook2-osx-amd64-v1.4.0.zip
-  #         unzip ./doxybook2-osx-amd64-v1.4.0.zip -d externals
-  #       displayName: "Setup: Doxybook2 1.4.0"
-  #     - powershell: |
-  #         doxygen ./docs/Doxyfile
-  #         ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
-  #       displayName: "Run Doxygen and Doxybook2"
-  #     - powershell: python3 -m mkdocs build # todo: gh-deploy
-  #     # - task: ArchiveFiles@2
-  #     #   inputs:
-  #     #     rootFolderOrFile: "$(Build.SourcesDirectory)/docs"
-  #     #     includeRootFolder: false
-  #     #     archiveType: "zip"
-  #     #     archiveFile: "$(Build.ArtifactStagingDirectory)/docs.zip"
-  #     #     replaceExistingArchive: true
-  #     - task: PublishBuildArtifacts@1
-  #       inputs:
-  #         # PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-  #         PathtoPublish: "$(Build.SourcesDirectory)/docs"
-  #         ArtifactName: "docs"
-  #   dependsOn:
-  #     - vs2022_msvc143
-  #     - macos15_appleclang
-  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  - job: mkdocs
+    pool:
+      vmImage: "macos-latest"
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.11'
+          addToPath: true
+          architecture: 'x64'
+      - powershell: |
+          brew install doxygen
+          python3 -m pip install --user -r requirements.txt
+        displayName: "Setup: Homebrew, Python3 packages"
+      - powershell: |
+          wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.5.0/doxybook2-osx-amd64-v1.5.0.zip
+          unzip ./doxybook2-osx-amd64-v1.5.0.zip -d externals
+        displayName: "Setup: Doxybook2 1.5.0"
+      - powershell: |
+          doxygen ./docs/Doxyfile
+          ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
+        displayName: "Run Doxygen and Doxybook2"
+      - powershell: |
+          python3 -m mkdocs build # todo: gh-deploy
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "$(Build.SourcesDirectory)/docs"
+          ArtifactName: "docs"
+    dependsOn:
+      - vs2022_msvc143
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
