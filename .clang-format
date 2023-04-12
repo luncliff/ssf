@@ -1,4 +1,4 @@
-# clang-foarmt 12+
+# clang-format 12+
 # https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 BasedOnStyle: LLVM
 UseTab: Never
@@ -8,7 +8,7 @@ ReflowComments: false
 AlignTrailingComments: true
 ---
 Language: Cpp
-Standard: Cpp11 # Cpp17
+Standard: Cpp20 # Cpp20
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
