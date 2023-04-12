@@ -2,7 +2,7 @@
     "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 26,
+        "minor": 25,
         "patch": 0
     },
     "configurePresets": [
@@ -123,6 +123,51 @@
                 "noTestsAction": "error",
                 "stopOnFailure": false
             }
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "zip-x64-windows",
+            "configurePreset": "x64-windows",
+            "generators": [
+                "ZIP"
+            ]
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "x64-windows-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-windows"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-windows-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "x64-windows-debug"
+                }
+            ]
+        },
+        {
+            "name": "x64-windows-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-windows"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-windows-release"
+                },
+                {
+                    "type": "package",
+                    "name": "zip-x64-windows"
+                }
+            ]
         }
     ]
 }
