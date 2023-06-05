@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.6" xml:lang="ko">
+  <compound refid="structaddrinfo" kind="struct"><name>addrinfo</name>
+  </compound>
+  <compound refid="namespacestd" kind="namespace"><name>std</name>
+  </compound>
+  <compound refid="socket_8cpp" kind="file"><name>socket.cpp</name>
+    <member refid="socket_8cpp_1a2a069c7121e09a6fc4fba28178577e1c" kind="function"><name>socket_create</name></member>
+    <member refid="socket_8cpp_1adc5a948d26ca8d969205da03143cf676" kind="function"><name>socket_create</name></member>
+    <member refid="socket_8cpp_1a57276ab3060b2acbb78378e321718415" kind="function"><name>socket_bind</name></member>
+    <member refid="socket_8cpp_1ab411d3fbc9c4e7763aedf7153b0f053d" kind="function"><name>socket_bind</name></member>
+    <member refid="socket_8cpp_1a72ad64c8745e48923e497b8aec216d87" kind="function"><name>socket_listen</name></member>
+    <member refid="socket_8cpp_1a7589801a6bd5cc25c87ecd9f849d8281" kind="function"><name>socket_connect</name></member>
+    <member refid="socket_8cpp_1a6f812e13495c77a708e2c822434fdea8" kind="function"><name>socket_connect</name></member>
+    <member refid="socket_8cpp_1aa125c1c2710ac6ceee78b695f30d034b" kind="function"><name>socket_accept</name></member>
+    <member refid="socket_8cpp_1a031ce6ea7f741e6a5ecf4f711478c19e" kind="function"><name>socket_get_name</name></member>
+    <member refid="socket_8cpp_1ac81fc21babd2bc72b739ae064e077439" kind="function"><name>socket_get_name</name></member>
+    <member refid="socket_8cpp_1a1f32dff752b392575d4f07355231f9a8" kind="function"><name>socket_get_peer</name></member>
+    <member refid="socket_8cpp_1a3d677b115c9bb0e63a7550b903536a3c" kind="function"><name>socket_get_peer</name></member>
+    <member refid="socket_8cpp_1ac38c5ed28135ecd13934fa08933205f3" kind="function"><name>socket_set_option</name></member>
+    <member refid="socket_8cpp_1ad9e60a284fa6fd28dde3f57d28532404" kind="function"><name>socket_set_option_reuse_address</name></member>
+    <member refid="socket_8cpp_1aa6e8317a0c5c0255606c5e5260b5dc00" kind="function"><name>socket_set_option_nodelay</name></member>
+    <member refid="socket_8cpp_1a31f3fd04fb05988a7a3e6c5d1126badd" kind="function"><name>socket_set_option_timout</name></member>
+    <member refid="socket_8cpp_1a11c23e9acbbffaf3f6c6861f8429d02a" kind="function"><name>socket_set_option_timout</name></member>
+    <member refid="socket_8cpp_1a4ea73aaf08802fdca753351ef3227487" kind="function"><name>socket_set_option_send_timout</name></member>
+    <member refid="socket_8cpp_1a8a082d28ab13d3f27efd086e16303c6a" kind="function"><name>socket_set_option_recv_timout</name></member>
+  </compound>
+  <compound refid="socket_8hpp" kind="file"><name>socket.hpp</name>
+    <member refid="socket_8hpp_1ad019c4466fd89e629acf64801e8d0885" kind="function"><name>socket_setup</name></member>
+    <member refid="socket_8hpp_1a77f25219e6e9039834edc7ca4e7507f6" kind="function"><name>socket_teardown</name></member>
+    <member refid="socket_8hpp_1a7a59135fe52e91d37ef54b74a155174e" kind="function"><name>socket_recent</name></member>
+    <member refid="socket_8hpp_1a080f80d234bca59ac52d59738c314246" kind="function"><name>socket_is_valid</name></member>
+    <member refid="socket_8hpp_1adc5a948d26ca8d969205da03143cf676" kind="function"><name>socket_create</name></member>
+    <member refid="socket_8hpp_1ac875491f2445520c5ac8b9ddfc55ad57" kind="function"><name>socket_close</name></member>
+    <member refid="socket_8hpp_1a57276ab3060b2acbb78378e321718415" kind="function"><name>socket_bind</name></member>
+    <member refid="socket_8hpp_1ab411d3fbc9c4e7763aedf7153b0f053d" kind="function"><name>socket_bind</name></member>
+    <member refid="socket_8hpp_1a72ad64c8745e48923e497b8aec216d87" kind="function"><name>socket_listen</name></member>
+    <member refid="socket_8hpp_1a7589801a6bd5cc25c87ecd9f849d8281" kind="function"><name>socket_connect</name></member>
+    <member refid="socket_8hpp_1a6f812e13495c77a708e2c822434fdea8" kind="function"><name>socket_connect</name></member>
+    <member refid="socket_8hpp_1aa125c1c2710ac6ceee78b695f30d034b" kind="function"><name>socket_accept</name></member>
+    <member refid="socket_8hpp_1a031ce6ea7f741e6a5ecf4f711478c19e" kind="function"><name>socket_get_name</name></member>
+    <member refid="socket_8hpp_1ac81fc21babd2bc72b739ae064e077439" kind="function"><name>socket_get_name</name></member>
+    <member refid="socket_8hpp_1a24bb544db5c840caf9fccd20c628cb61" kind="function"><name>socket_get_peer</name></member>
+    <member refid="socket_8hpp_1a34d1fb5bb98fa31fca52b88d81534276" kind="function"><name>socket_get_peer</name></member>
+    <member refid="socket_8hpp_1ac38c5ed28135ecd13934fa08933205f3" kind="function"><name>socket_set_option</name></member>
+    <member refid="socket_8hpp_1aab48cce81295876864e04fb3638a8408" kind="function"><name>socket_set_option_nonblock</name></member>
+    <member refid="socket_8hpp_1ad9e60a284fa6fd28dde3f57d28532404" kind="function"><name>socket_set_option_reuse_address</name></member>
+    <member refid="socket_8hpp_1aa6e8317a0c5c0255606c5e5260b5dc00" kind="function"><name>socket_set_option_nodelay</name></member>
+    <member refid="socket_8hpp_1a4ea73aaf08802fdca753351ef3227487" kind="function"><name>socket_set_option_send_timout</name></member>
+    <member refid="socket_8hpp_1a8a082d28ab13d3f27efd086e16303c6a" kind="function"><name>socket_set_option_recv_timout</name></member>
+    <member refid="socket_8hpp_1a901db3d71d4a694562fda404e8a8e547" kind="function"><name>socket_would_block</name></member>
+  </compound>
+  <compound refid="socket__test_8cpp" kind="file"><name>socket_test.cpp</name>
+    <member refid="socket__test_8cpp_1a81ce304348a420752ee080480d2b3095" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>src</name>
+  </compound>
+</doxygenindex>
