@@ -116,7 +116,8 @@ jobs:
         displayName: "Setup: Doxybook2 1.5.0"
       - powershell: |
           doxygen ./docs/Doxyfile
-          ./externals/bin/doxybook2 --input ./docs/xml --output ./docs
+          # ./externals/bin/doxybook2 --generate-config ./docs/doxybook2-config.json
+          ./externals/bin/doxybook2 --input ./docs/xml --output ./docs --config ./docs/doxybook2-config.json
         displayName: "Run Doxygen and Doxybook2"
       - powershell: |
           python3 -m mkdocs build # todo: gh-deploy
@@ -126,4 +127,4 @@ jobs:
           ArtifactName: "docs"
     dependsOn:
       - vs2022_msvc143
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))

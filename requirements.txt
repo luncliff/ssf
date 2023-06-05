@@ -1,20 +1,12 @@
 #
 #   https://github.com/matusnovak/doxybook2/
-#
-mkdocs
-markdown
-
-#
 #   https://community.netlify.com/t/mkdocs-fail-on-build/12082/2
-#
-mkdocs-material
-mkdocs-material-extensions
-
-#
 #   https://devblogs.microsoft.com/cppblog/clear-functional-c-documentation-with-sphinx-breathe-doxygen-cmake/
 #   https://pandoc.org/demos.html
 #
-# pandoc
-# sphinx_rtd_theme
-# guzzle_sphinx_theme
-# breathe
+mkdocs
+markdown
+Pygments # https://pygments.org/
+
+mkdocs-material>=9.0
+mkdocs-material-extensions

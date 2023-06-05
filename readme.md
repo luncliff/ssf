@@ -1,7 +1,7 @@
 
 # SSF: Simple Socket Functions
 
-[![Build Status](https://dev.azure.com/luncliff/personal/_apis/build/status/luncliff.ssf?branchName=master)](https://dev.azure.com/luncliff/personal/_build/latest?definitionId=32&branchName=master) 
+[![Build Status](https://dev.azure.com/luncliff/personal/_apis/build/status/luncliff.ssf?branchName=main)](https://dev.azure.com/luncliff/personal/_build/latest?definitionId=32&branchName=main) 
 
 Minimal C++ code snippet to **build** something.
 
