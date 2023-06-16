@@ -6,6 +6,7 @@ externals
 build
 build-*
 
+.scannerwork
 .vscode
 .vs
 *.zip

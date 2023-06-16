@@ -20,6 +20,14 @@ jobs:
       VCPKG_ROOT: "C:\\vcpkg"
     steps:
     - uses: actions/checkout@v3
+    - name: "setup-sonar"
+      uses: SonarSource/sonarcloud-github-c-cpp@v1
+    # - name: "Prepare Sonar tools"
+    #   run: |
+    #     Invoke-WebRequest -Uri "https://sonarcloud.io/static/cpp/build-wrapper-win-x86.zip" -OutFile "build-wrapper.zip"
+    #     Expand-Archive -Force -Path "build-wrapper.zip" -DestinationPath "externals"
+    #     Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip" -OutFile "sonar-scanner-cli.zip"
+    #     Expand-Archive -Force -Path "sonar-scanner-cli.zip" -DestinationPath "externals"
     - name: "setup-msbuild"
       uses: microsoft/setup-msbuild@v1.1
       with:
@@ -28,18 +36,13 @@ jobs:
       uses: lukka/run-cmake@v10.3
       with:
         cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
-        workflowPreset: ${{ matrix.triplet }}-debug
-        # configurePreset: ${{ matrix.triplet }}
-        # buildPreset: ${{ matrix.triplet }}-debug
-        # testPreset: ${{ matrix.triplet }}-debug
-    - name: "Preapare Build Wrapper"
-      run: |
-        Invoke-WebRequest -Uri "https://sonarcloud.io/static/cpp/build-wrapper-win-x86.zip" -OutFile "build-wrapper.zip"
-        Expand-Archive -Path "build-wrapper.zip" -DestinationPath "build-x64-windows"
+        configurePreset: ${{ matrix.triplet }}
     - name: "Run Build Wrapper"
       run: |
-        $ToolPath = Join-Path $(Get-Location) "build-x64-windows"
-        $ToolPath = Join-Path $ToolPath "build-wrapper-win-x86"
-        $env:PATH = "$ToolPath;$env:PATH"
-        build-wrapper-win-x86-64.exe --out-dir "bw-output" cmake --build --preset=x64-windows-debug --clean-first
-      # working-directory: "build-x64-windows"
+        build-wrapper-win-x86-64 --out-dir "bw-output" cmake --build --preset=x64-windows-debug --clean-first
+    - name: "Run SonarScanner"
+      run: |
+        sonar-scanner --define sonar.verbose=true
+      # env:
+      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
