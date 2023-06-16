@@ -30,6 +30,8 @@ jobs:
     strategy:
       matrix:
         triplet: [ x64-windows ]
+    env:
+      VCPKG_ROOT: "C:\\vcpkg"
     steps:
     - uses: actions/checkout@v3
     - name: run-cmake
