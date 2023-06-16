@@ -1,0 +1,43 @@
+name: "Analysis"
+
+# on: [ push, pull_request, workflow_dispatch ]
+on:
+  push:
+    branches-ignore:
+      - 'docs'
+
+env:
+  VCPKG_FEATURE_FLAGS: "registries,binarycaching,manifests"
+
+jobs:
+  windows:
+    # https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        triplet: [ x64-windows ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: "setup-msbuild"
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        msbuild-architecture: x64
+    - name: "run-cmake(x64)"
+      uses: lukka/run-cmake@v10.3
+      with:
+        cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
+        workflowPreset: ${{ matrix.triplet }}-debug
+        # configurePreset: ${{ matrix.triplet }}
+        # buildPreset: ${{ matrix.triplet }}-debug
+        # testPreset: ${{ matrix.triplet }}-debug
+    - name: "Preapare Build Wrapper"
+      run: |
+        Invoke-WebRequest -Uri "https://sonarcloud.io/static/cpp/build-wrapper-win-x86.zip" -OutFile "build-wrapper.zip"
+        Expand-Archive -Path "build-wrapper.zip" -DestinationPath "build-x64-windows"
+    - name: "Run Build Wrapper"
+      run: |
+        $ToolPath = Join-Path $(Get-Location) "build-x64-windows"
+        $ToolPath = Join-Path $ToolPath "build-wrapper-win-x86"
+        $env:PATH = "$ToolPath;$env:PATH"
+        build-wrapper-win-x86-64.exe --out-dir "bw-output" cmake --build --preset=x64-windows-debug --clean-first
+      # working-directory: "build-x64-windows"
