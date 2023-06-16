@@ -1,0 +1,44 @@
+name: "Analysis"
+
+# on: [ push, pull_request, workflow_dispatch ]
+on:
+  push:
+    branches-ignore:
+      - 'docs'
+
+env:
+  VCPKG_FEATURE_FLAGS: "registries,binarycaching,manifests"
+
+jobs:
+  windows_x64:
+    # https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
+    runs-on: windows-2022
+    env:
+      VCPKG_ROOT: "C:\\vcpkg"
+    steps:
+    - uses: actions/checkout@v3
+    - name: "setup-sonar"
+      uses: SonarSource/sonarcloud-github-c-cpp@v1
+    # - name: "Prepare Sonar tools"
+    #   run: |
+    #     Invoke-WebRequest -Uri "https://sonarcloud.io/static/cpp/build-wrapper-win-x86.zip" -OutFile "build-wrapper.zip"
+    #     Expand-Archive -Force -Path "build-wrapper.zip" -DestinationPath "externals"
+    #     Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip" -OutFile "sonar-scanner-cli.zip"
+    #     Expand-Archive -Force -Path "sonar-scanner-cli.zip" -DestinationPath "externals"
+    - name: "setup-msbuild"
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        msbuild-architecture: x64
+    - name: "run-cmake(x64)"
+      uses: lukka/run-cmake@v10.3
+      with:
+        cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
+        configurePreset: x64-windows
+    - name: "Run build-wrapper"
+      run: |
+        build-wrapper-win-x86-64 --out-dir "bw-output" cmake --build --preset=x64-windows-debug --clean-first
+    - name: "Run sonar-scanner"
+      run: |
+        sonar-scanner --define sonar.verbose=true
+      # env:
+      #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
