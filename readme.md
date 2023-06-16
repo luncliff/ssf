@@ -2,6 +2,7 @@
 # SSF: Simple Socket Functions
 
 [![Build Status](https://dev.azure.com/luncliff/personal/_apis/build/status/luncliff.ssf?branchName=main)](https://dev.azure.com/luncliff/personal/_build/latest?definitionId=32&branchName=main) 
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=luncliff-ssf&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=luncliff-ssf)
 
 Minimal C++ code snippet to **build** something.
 
