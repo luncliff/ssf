@@ -10,12 +10,9 @@ env:
   VCPKG_FEATURE_FLAGS: "registries,binarycaching,manifests"
 
 jobs:
-  windows:
+  windows_x64:
     # https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
     runs-on: windows-2022
-    strategy:
-      matrix:
-        triplet: [ x64-windows ]
     env:
       VCPKG_ROOT: "C:\\vcpkg"
     steps:
@@ -36,13 +33,12 @@ jobs:
       uses: lukka/run-cmake@v10.3
       with:
         cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
-        configurePreset: ${{ matrix.triplet }}
-    - name: "Run Build Wrapper"
+        configurePreset: x64-windows
+    - name: "Run build-wrapper"
       run: |
         build-wrapper-win-x86-64 --out-dir "bw-output" cmake --build --preset=x64-windows-debug --clean-first
-    - name: "Run SonarScanner"
+    - name: "Run sonar-scanner"
       run: |
         sonar-scanner --define sonar.verbose=true
       # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
