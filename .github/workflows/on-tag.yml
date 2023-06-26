@@ -30,10 +30,12 @@ jobs:
     - uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
-        secure: true
+        ignore_cert: true
+        secure: false
         subject: "luncliff/ssf - ${{ github.workflow.name }} ${{ github.repository }}/${{ github.run_id }}"
-        to: luncliff@gmail.com
         from: luncliff@gmail.com
+        to: luncliff@gmail.com
+        cc: luncliff@gmail.com
         username: ${{ secrets.GMAIL_SENDER_USERNAME }}
         password: ${{ secrets.GMAIL_SENDER_PASSWORD }}
         body: |
