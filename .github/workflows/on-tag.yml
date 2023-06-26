@@ -3,14 +3,13 @@ name: "Tag: Sample"
 on:
   push:
     tags:
-      - '*'
+      - '**'
 
 jobs:
   build_x64:
     runs-on: windows-2022
-    strategy:
-      matrix:
-        triplet: [ x64-windows ]
+    env:
+      VCPKG_ROOT: "C:\\vcpkg"
     steps:
     - uses: actions/checkout@v3
       with:
@@ -20,7 +19,7 @@ jobs:
       uses: lukka/run-cmake@v10.3
       with:
         cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
-        workflowPreset: ${{ matrix.triplet }}-debug
+        workflowPreset: x64-windows-debug
         configurePresetAdditionalArgs: "['-DCMAKE_INSTALL_DEBUG_LIBRARIES=1']"
         buildPresetAdditionalArgs: "['--target install']"
     - uses: actions/upload-artifact@v3
