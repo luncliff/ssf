@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  build_x64:
+  build_x64_debug:
     runs-on: windows-2022
     env:
       VCPKG_ROOT: "C:\\vcpkg"
@@ -26,3 +26,14 @@ jobs:
       with:
         name: x64-windows-debug
         path: install
+        retention-days: 5
+    - uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        subject: "GH: ${{ github.workflow.name }} ${{ github.repository }}/${{ github.run_id }}"
+        to: luncliff@gmail.com
+        from: luncliff@gmail.com
+        body: |
+          host: ${{ runner.arch }}-${{ runner.os }}(${{ runner.name }})
+          job: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          summary: ${{ github.sha }}
