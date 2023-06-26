@@ -15,14 +15,14 @@ jobs:
       with:
         clean: true
         submodules: false
-    - name: run-cmake
-      uses: lukka/run-cmake@v10.3
+    - uses: lukka/run-cmake@v10.3
       with:
         cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
-        workflowPreset: x64-windows-debug
+        configurePreset: "x64-windows"
         configurePresetAdditionalArgs: "['-DCMAKE_INSTALL_DEBUG_LIBRARIES=1']"
+        buildPreset: "x64-windows-debug"
         buildPresetAdditionalArgs: "['--target install']"
     - uses: actions/upload-artifact@v3
       with:
-        name: x64-windows
+        name: x64-windows-debug
         path: install
