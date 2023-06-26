@@ -1,0 +1,44 @@
+name: "on-tag"
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  deploy_x64_debug:
+    runs-on: windows-2022
+    env:
+      VCPKG_ROOT: "C:\\vcpkg"
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        clean: true
+        submodules: false
+    - uses: lukka/run-cmake@v10.3
+      with:
+        cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
+        configurePreset: "x64-windows"
+        configurePresetAdditionalArgs: "['-DCMAKE_INSTALL_DEBUG_LIBRARIES=1']"
+        buildPreset: "x64-windows-debug"
+        buildPresetAdditionalArgs: "['--target install']"
+    - uses: actions/upload-artifact@v3
+      with:
+        name: x64-windows-debug
+        path: install
+        retention-days: 5
+    - uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        ignore_cert: true
+        secure: false
+        subject: "luncliff/ssf - ${{ github.workflow.name }} ${{ github.repository }}/${{ github.run_id }}"
+        to: luncliff@gmail.com
+        cc: luncliff@gmail.com
+        from: ${{ secrets.GMAIL_SENDER_USERMAIL }}
+        username: ${{ secrets.GMAIL_SENDER_USERMAIL }}
+        password: ${{ secrets.GMAIL_SENDER_PASSWORD }}
+        body: |
+          host: ${{ runner.arch }}-${{ runner.os }}(${{ runner.name }})
+          job: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          summary: ${{ github.sha }}
