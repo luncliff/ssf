@@ -1,4 +1,4 @@
-name: "Tag: Sample"
+name: "on-tag"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  build_x64_debug:
+  deploy_x64_debug:
     runs-on: windows-2022
     env:
       VCPKG_ROOT: "C:\\vcpkg"
@@ -33,10 +33,10 @@ jobs:
         ignore_cert: true
         secure: false
         subject: "luncliff/ssf - ${{ github.workflow.name }} ${{ github.repository }}/${{ github.run_id }}"
-        from: luncliff@gmail.com
         to: luncliff@gmail.com
         cc: luncliff@gmail.com
-        username: ${{ secrets.GMAIL_SENDER_USERNAME }}
+        from: ${{ secrets.GMAIL_SENDER_USERMAIL }}
+        username: ${{ secrets.GMAIL_SENDER_USERMAIL }}
         password: ${{ secrets.GMAIL_SENDER_PASSWORD }}
         body: |
           host: ${{ runner.arch }}-${{ runner.os }}(${{ runner.name }})
