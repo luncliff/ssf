@@ -4,15 +4,14 @@ message(STATUS "Using system: ${CMAKE_SYSTEM_VERSION}")
 
 # option(BUILD_SHARED_LIBS    "https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html" ON)
 option(BUILD_TESTING        "Build test program" ON) # include(CTest)
-option(INSTALL_FOR_DEPLOY   "Install UCRT, Debug DLLs(for Windows)" OFF)
 
 include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 
-if(WIN32 AND INSTALL_FOR_DEPLOY)
+if(WIN32)
     # see "C:/Program Files (x86)/Windows Kits/10/Redist/..."
     # 10.0.18362.0, 10.0.19041.0, 10.0.20348.0 ...
-    set(CMAKE_INSTALL_DEBUG_LIBRARIES true)
+    # set(CMAKE_INSTALL_DEBUG_LIBRARIES true)
     set(CMAKE_INSTALL_UCRT_LIBRARIES true)
     include(InstallRequiredSystemLibraries)
     # message(STATUS "Using target: ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
